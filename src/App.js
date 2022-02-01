@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import ReadEveryAccounts from './components/ReadEveryAccounts';
-import ReadEveryItems from './components/ReadEveryItems';
+import ReadEveryAccounts from './components/account/ReadEveryAccounts';
+import CreateAccount from './components/account/CreateAcccount';
+import ReadEveryItems from './components/item/ReadEveryItems';
 import './App.css';
 
 const api = axios.create({
@@ -14,31 +15,36 @@ class App extends Component{
 		this.state = {
 			mode: 'read_accounts',
 			logIn: false,
-			accounts: null,
-			items: null,
+			accounts: [],
+			items: [],
 		}
 	}
+
+	componentDidMount(){
+		this.getEveryAccounts();
+	}
+
 	postIt = async () => {
 		const P_result = await api.post('/harvest',
 			{
 				name: 'Point Guard',
 			});
-		console.log('from post: ', P_result);
 	}
+
 	getEveryAccounts = async () => {
 		const result = await api.get('/accounts/read_all');
 		this.setState({
 			accounts: result.data,
 		})
-		console.log(this.state.accounts);
 	}
+
 	getEveryItems = async () => {
 		const result = await api.get('/items/read_all');
 		this.setState({
 			items: result.data,
 		})
-		console.log(this.state.items);
 	}
+
 	changeMode = () => {
 		if(this.state.items === null)
 			this.getEveryItems();
@@ -51,50 +57,24 @@ class App extends Component{
 			mode: toWhat,
 		})
 	}
-	componentDidMount(){
-		this.getEveryAccounts();
-	}
-	getConetent(){
-		if(this.state.mode === 'read_accounts'){
-			if(this.state.accounts !== null){
-				return <ReadEveryAccounts 
-						id={this.state.accounts[0].id} 
-						name={this.state.accounts[0].name}
-						registered_date={this.state.accounts[0].registered_date}
-						></ReadEveryAccounts>
-			}else{
-				console.log('accounts are null');
-				return 
-			}
-		}else if(this.state.mode === 'read_items'){
-			if(this.state.items !== null){
-				return <ReadEveryItems 
-						id={this.state.items[0].id} 
-						name={this.state.items[0].name}
-						registered_date={this.state.items[0].registered_date}
-						purchase_cost={this.state.items[0].purchase_cost}
-						size={this.state.items[0].size}
-						></ReadEveryItems>
-			}else{
-				console.log('items are null');
-				return
-			}
-
-		}
-	}
 
 	render(){
-
 		return (
 		<div className="App">
-			<h2>CONNNECTION TEST</h2>
+			<h1>HOME PAGE</h1>
+			<div>crud of accounts, button for read_all_item</div>
+			<br></br><br></br>
+			<CreateAccount onPost={this.getEveryAccounts} />
+			<br></br><br></br>
 			<span>READ: </span>
 			<button onClick={this.changeMode}>accounts</button>
 			<button onClick={this.changeMode}>items</button>
 			<br></br><br></br>
-			<button onClick={this.postIt}>POST</button>
+			<button onClick={this.postIt}>POST test</button>
 			<br></br><br></br>
-			{this.getConetent()}
+
+			<ReadEveryAccounts data={this.state.accounts} />
+
 		</div>
 		);
 	}
