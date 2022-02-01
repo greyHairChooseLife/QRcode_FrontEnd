@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class ReadEveryAccounts extends Component{
+class ReadAccount extends Component{
 	render(){
 		let list = [];
 		const data = this.props.data;
@@ -14,11 +14,11 @@ class ReadEveryAccounts extends Component{
 			)
 		}
 		return (
-			<div>
+			<div className="ReadAccount">
 				{list}
 			</div>
 		);
 	}
 }
 
-export default ReadEveryAccounts;
+export default ReadAccount;

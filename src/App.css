@@ -1,4 +1,28 @@
 .App {
   text-align: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
 }
 
+button {
+	width: 5vw;
+	margin: auto;
+}
+
+.sub {
+	grid-column: 1/3;
+	grid-row: 1/2;
+}
+
+.ReadAccount {
+	margin-top: 10vh;
+	grid-column: 1/2;
+	grid-row: 2/3;
+}
+
+.UpdateAccount {
+	margin-top: 10vh;
+	grid-column: 2/3;
+	grid-row: 2/3;
+}

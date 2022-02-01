@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import ReadEveryAccounts from './components/account/ReadEveryAccounts';
-import CreateAccount from './components/account/CreateAcccount';
+import CreateAccount from './components/account/CreateAccount';
+import ReadAccount from './components/account/ReadAccount';
+import UpdateAccount from './components/account/UpdateAccount';
 import ReadEveryItems from './components/item/ReadEveryItems';
 import './App.css';
 
@@ -61,19 +62,21 @@ class App extends Component{
 	render(){
 		return (
 		<div className="App">
-			<h1>HOME PAGE</h1>
-			<div>crud of accounts, button for read_all_item</div>
-			<br></br><br></br>
-			<CreateAccount onPost={this.getEveryAccounts} />
-			<br></br><br></br>
-			<span>READ: </span>
-			<button onClick={this.changeMode}>accounts</button>
-			<button onClick={this.changeMode}>items</button>
-			<br></br><br></br>
-			<button onClick={this.postIt}>POST test</button>
-			<br></br><br></br>
+			<div className="sub">
+				<h1>HOME PAGE</h1>
+				<div>crud of accounts, button for read_all_item</div>
+				<br></br><br></br>
+				<CreateAccount onPost={this.getEveryAccounts} />
+				<br></br><br></br>
+				<span>READ: </span>
+				<button onClick={this.changeMode}>accounts</button>
+				<button onClick={this.changeMode}>items</button>
+				<br></br><br></br>
+				<button onClick={this.postIt}>POST test</button>
+			</div>
 
-			<ReadEveryAccounts data={this.state.accounts} />
+			<ReadAccount data={this.state.accounts} />
+			<UpdateAccount data_length={this.state.accounts.length} />
 
 		</div>
 		);
