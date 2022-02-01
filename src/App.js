@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import CreateAccount from './components/account/CreateAccount';
 import ReadAccount from './components/account/ReadAccount';
 import UpdateAccount from './components/account/UpdateAccount';
+import DeleteAccount from './components/account/DeleteAccount';
 import ReadEveryItems from './components/item/ReadEveryItems';
 import './App.css';
 
@@ -19,6 +20,7 @@ class App extends Component{
 			accounts: [],
 			items: [],
 			updateTarget: null,
+			targetOfList: null,
 		}
 	}
 
@@ -47,10 +49,11 @@ class App extends Component{
 		})
 	}
 
-	changeMode = (mode, i) => {
+	changeMode = (mode, target, i) => {
 		this.setState({
 			mode: mode,
-			updateTarget: i,
+			updateTarget: target,
+			targetOfList: i, 
 		})
 	}
 
@@ -61,14 +64,20 @@ class App extends Component{
 		else if(this.state.mode === 'update_account'){
 			content = <UpdateAccount 
 			data={this.state.accounts}
-			target={this.state.updateTarget}
+			updateTarget={this.state.updateTarget}
+			targetOfList={this.state.targetOfList}
 			onCancel={this.changeMode}
 			onPost={this.changeMode}
 			onPost2={this.getEveryAccounts}
 				/>;
 		}
+		else if(this.state.mode === 'delete_account'){
+			content = <DeleteAccount target={this.state.updateTarget} onUpdate={this.changeMode} />;
+			
+		}
 		else if(this.state.mode === 'read_item')
 			content = 'read items Component';
+
 		return (
 		<div className="App">
 			<div className="sub">

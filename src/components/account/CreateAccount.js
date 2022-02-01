@@ -6,18 +6,18 @@ const api = axios.create({
 })
 
 class CreateAccount extends Component{
-	createAccount = (name) => {
-		const result = api.post('/accounts/create_account',{
+	createAccount = async (name) => {
+		const result = await api.post('/accounts/create_account',{
 				name: name,
 			});
+		this.props.onPost();
 	}
 	render(){
 		return (
 			<div>
-				<form onSubmit={async function(e){
+				<form onSubmit={function(e){
 					e.preventDefault();
-					await this.createAccount(e.target.name.value);
-					this.props.onPost();
+					this.createAccount(e.target.name.value)
 				}.bind(this)}>
 					<input type="text" name="name" placeholder="거래처명"></input>
 					<input type="submit" value="submit" />

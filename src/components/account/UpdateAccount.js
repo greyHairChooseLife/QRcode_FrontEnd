@@ -16,12 +16,12 @@ class UpdateAccount extends Component{
 		let list = [];
 		const data = this.props.data;
 		for(var i=0; i<data.length; i++){
-			if(i === this.props.target)
+			if(i === this.props.targetOfList)
 				list.push(
 					<div key={data[i].id}>
 					<form onSubmit={async function(e){
 						e.preventDefault();
-						await this.updateAccount(e.target.name.value, this.props.target);
+						await this.updateAccount(e.target.name.value, this.props.updateTarget);
 						this.props.onPost('read_account');
 						this.props.onPost2();
 					}.bind(this)}>

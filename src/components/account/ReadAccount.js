@@ -12,8 +12,11 @@ class ReadAccount extends Component{
 					<span>{data[m].name}</span>
 					<span>{data[m].registered_date}</span>
 					<button onClick={function(){
-						this.props.onUpdate('update_account', m);
+						this.props.onUpdate('update_account', data[m].id, m);
 					}.bind(this)}>update</button>
+					<button onClick={function(){
+						this.props.onUpdate('delete_account', data[m].id, m);
+					}.bind(this)}>delete</button>
 				</div>
 			)
 			}.bind(this))(i)
