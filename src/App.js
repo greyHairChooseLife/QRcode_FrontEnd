@@ -62,6 +62,9 @@ class App extends Component{
 			content = <UpdateAccount 
 			data={this.state.accounts}
 			target={this.state.updateTarget}
+			onCancel={this.changeMode}
+			onPost={this.changeMode}
+			onPost2={this.getEveryAccounts}
 				/>;
 		}
 		else if(this.state.mode === 'read_item')
