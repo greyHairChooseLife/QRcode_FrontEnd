@@ -14,10 +14,11 @@ class App extends Component{
 	constructor() {
 		super();
 		this.state = {
-			mode: 'read_accounts',
+			mode: 'read_account',
 			logIn: false,
 			accounts: [],
 			items: [],
+			updateTarget: null,
 		}
 	}
 
@@ -46,20 +47,25 @@ class App extends Component{
 		})
 	}
 
-	changeMode = () => {
-		if(this.state.items === null)
-			this.getEveryItems();
-		let toWhat = null;
-		if(this.state.mode === 'read_accounts')
-			toWhat = 'read_items'
-		else
-			toWhat = 'read_accounts'
+	changeMode = (mode, i) => {
 		this.setState({
-			mode: toWhat,
+			mode: mode,
+			updateTarget: i,
 		})
 	}
 
 	render(){
+		let content = null;
+		if(this.state.mode === 'read_account')
+			content = <ReadAccount data={this.state.accounts} onUpdate={this.changeMode} />;
+		else if(this.state.mode === 'update_account'){
+			content = <UpdateAccount 
+			data={this.state.accounts}
+			target={this.state.updateTarget}
+				/>;
+		}
+		else if(this.state.mode === 'read_item')
+			content = 'read items Component';
 		return (
 		<div className="App">
 			<div className="sub">
@@ -69,14 +75,13 @@ class App extends Component{
 				<CreateAccount onPost={this.getEveryAccounts} />
 				<br></br><br></br>
 				<span>READ: </span>
-				<button onClick={this.changeMode}>accounts</button>
-				<button onClick={this.changeMode}>items</button>
+				<button>accounts</button>
+				<button>items</button>
 				<br></br><br></br>
 				<button onClick={this.postIt}>POST test</button>
 			</div>
 
-			<ReadAccount data={this.state.accounts} />
-			<UpdateAccount data_length={this.state.accounts.length} />
+			{content}
 
 		</div>
 		);
