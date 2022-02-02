@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { Component } from 'react';
 import CreateAccount from './components/account/CreateAccount';
 import ReadAccount from './components/account/ReadAccount';
@@ -6,10 +5,6 @@ import UpdateAccount from './components/account/UpdateAccount';
 import DeleteAccount from './components/account/DeleteAccount';
 import ReadItem from './components/item/ReadItem';
 import './App.css';
-
-const api = axios.create({
-	baseURL: 'http://localhost:5000',
-})
 
 class App extends Component{
 	constructor() {
@@ -24,24 +19,6 @@ class App extends Component{
 		}
 	}
 
-	componentDidMount(){
-		this.getEveryAccounts();
-	}
-
-	postIt = async () => {
-		const P_result = await api.post('/harvest',
-			{
-				name: 'Point Guard',
-			});
-	}
-
-	getEveryAccounts = async () => {
-		const result = await api.get('/accounts/read_all');
-		this.setState({
-			accounts: result.data,
-		})
-	}
-
 	changeMode = (mode, target, i) => {
 		this.setState({
 			mode: mode,
@@ -50,7 +27,13 @@ class App extends Component{
 		})
 	}
 
-	updateItem = (items) => {
+	resetAccount = (accounts) => {
+		this.setState({
+			accounts: accounts,
+		})
+	}
+
+	resetItem = (items) => {
 		this.setState({
 			items: items,
 		})
@@ -59,26 +42,23 @@ class App extends Component{
 	render(){
 		let content = null;
 		if(this.state.mode === 'read_account')
-			content = <ReadAccount data={this.state.accounts} onUpdate={this.changeMode} />;
+			content = <ReadAccount resetAccount={this.resetAccount} data={this.state.accounts} changeMode={this.changeMode} />;
 		else if(this.state.mode === 'update_account'){
 			content = <UpdateAccount 
 			data={this.state.accounts}
 			updateTarget={this.state.updateTarget}
 			targetOfList={this.state.targetOfList}
-			onCancel={this.changeMode}
-			onPost={this.changeMode}
-			onPost2={this.getEveryAccounts}
+			changeMode={this.changeMode}
 				/>;
 		}
 		else if(this.state.mode === 'delete_account'){
 			content = <DeleteAccount
 			target={this.state.updateTarget}
-			onUpdate={this.changeMode}
-			doReadAgain={this.getEveryAccounts}
+			changeMode={this.changeMode}
 				/>;
 		}
 		else if(this.state.mode === 'read_item')
-			content = <ReadItem updateItem={this.updateItem} data={this.state.items} />
+			content = <ReadItem resetItem={this.resetItem} data={this.state.items} />
 
 		return (
 		<div className="App">
@@ -86,7 +66,7 @@ class App extends Component{
 				<h1>HOME PAGE</h1>
 				<div>crud of accounts, button for read_all_item</div>
 				<br></br><br></br>
-				<CreateAccount onPost={this.getEveryAccounts} />
+				<CreateAccount changeMode={this.changeMode} />
 				<br></br><br></br>
 				<span>READ: </span>
 				<button onClick={function(){this.changeMode('read_account', null, null)}.bind(this)}>거래처</button>

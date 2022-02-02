@@ -10,7 +10,8 @@ class CreateAccount extends Component{
 		const result = await api.post('/accounts/create_account',{
 				name: name,
 			});
-		this.props.onPost();
+		this.props.changeMode('just for re-rendering', null, null);
+		this.props.changeMode('read_account', null, null);
 	}
 	render(){
 		return (

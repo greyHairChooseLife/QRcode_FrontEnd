@@ -6,14 +6,12 @@ const api = axios.create({
 })
 
 class UpdateAccount extends Component{
-	updateAccount = async (new_name, target) => {
-		const result = await api.post('/accounts/update_account',{
+	updateAccount = (new_name, target) => {
+		const result = api.post('/accounts/update_account',{
 			new_name: new_name,
 			target: target,
 		});
-		this.props.changeMode('read_account');
 	}
-
 	render(){
 		let list = [];
 		const data = this.props.data;
@@ -21,9 +19,11 @@ class UpdateAccount extends Component{
 			if(i === this.props.targetOfList)
 				list.push(
 					<div key={data[i].id}>
-					<form onSubmit={function(e){
+					<form onSubmit={async function(e){
 						e.preventDefault();
-						this.updateAccount(e.target.name.value, this.props.updateTarget);
+						await this.updateAccount(e.target.name.value, this.props.updateTarget);
+						this.props.onPost('read_account');
+						this.props.onPost2();
 					}.bind(this)}>
 						<span>{data[i].id}</span>
 						<input type="text" name="name" defaultValue={data[i].name} />
@@ -31,7 +31,7 @@ class UpdateAccount extends Component{
 						<input type="submit" value="apply" />
 						<button onClick={function(e){
 							e.preventDefault();
-							this.props.changeMode('read_account', null);
+							this.props.onCancel('read_account', null);
 						}.bind(this)}>cancel</button>
 					</form>
 					</div>
@@ -43,6 +43,7 @@ class UpdateAccount extends Component{
 					<span>{data[i].id}</span>
 					<span>{data[i].name}</span>
 					<span>{data[i].registered_date}</span>
+					<button>update</button>
 				</div>
 			)
 			}

@@ -1,6 +1,19 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+
+const api = axios.create({
+	baseURL: 'http://localhost:5000',
+})
 
 class ReadAccount extends Component{
+	getEveryAccounts = async () => {
+		const result = await api.get('/accounts/read_all');
+		this.props.resetAccount(result.data);
+	}
+	componentDidMount(){
+		this.getEveryAccounts();
+	}
+
 	render(){
 		let list = [];
 		const data = this.props.data;
@@ -12,10 +25,10 @@ class ReadAccount extends Component{
 					<span>{data[m].name}</span>
 					<span>{data[m].registered_date}</span>
 					<button onClick={function(){
-						this.props.onUpdate('update_account', data[m].id, m);
+						this.props.changeMode('update_account', data[m].id, m);
 					}.bind(this)}>update</button>
 					<button onClick={function(){
-						this.props.onUpdate('delete_account', data[m].id, m);
+						this.props.changeMode('delete_account', data[m].id, m);
 					}.bind(this)}>delete</button>
 				</div>
 			)
