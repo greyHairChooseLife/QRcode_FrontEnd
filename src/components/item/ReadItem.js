@@ -8,7 +8,7 @@ const api = axios.create({
 class ReadItem extends Component{
 	getEveryItems = async () => {
 		const result = await api.get('/items/read_all');
-		this.props.reloadItem(result.data);
+		this.props.resetItem(result.data);
 	}
 	componentDidMount(){
 		this.getEveryItems();
@@ -26,7 +26,7 @@ class ReadItem extends Component{
 			)
 		}
 		return (
-			<div>
+			<div className="ReadItem">
 				{list}
 			</div>
 		);

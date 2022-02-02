@@ -15,7 +15,7 @@ class CreateAccount extends Component{
 	}
 	render(){
 		return (
-			<div>
+			<div className="CreateAccount">
 				<form onSubmit={function(e){
 					e.preventDefault();
 					this.createAccount(e.target.name.value)

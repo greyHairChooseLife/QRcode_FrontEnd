@@ -21,6 +21,7 @@ class ReadAccount extends Component{
 			(function(m){
 			list.push(
 				<div key={data[m].id}>
+					<button>Control</button>
 					<span>{data[m].id}</span>
 					<span>{data[m].name}</span>
 					<span>{data[m].registered_date}</span>

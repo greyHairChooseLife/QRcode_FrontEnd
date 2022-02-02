@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Header from './components/Header';
 import CreateAccount from './components/account/CreateAccount';
 import ReadAccount from './components/account/ReadAccount';
 import UpdateAccount from './components/account/UpdateAccount';
@@ -40,43 +41,40 @@ class App extends Component{
 	}
 
 	render(){
-		let content = null;
-		if(this.state.mode === 'read_account')
-			content = <ReadAccount resetAccount={this.resetAccount} data={this.state.accounts} changeMode={this.changeMode} />;
+		let header, nav, article = null;
+		
+		if(this.state.mode === 'read_account'){
+			header = <Header title={'HOME PAGE'} changeMode={this.changeMode} />;
+			nav = <CreateAccount changeMode={this.changeMode} />
+			article = <ReadAccount
+				resetAccount={this.resetAccount}
+				data={this.state.accounts}
+				changeMode={this.changeMode} />;
+		}
 		else if(this.state.mode === 'update_account'){
-			content = <UpdateAccount 
-			data={this.state.accounts}
-			updateTarget={this.state.updateTarget}
-			targetOfList={this.state.targetOfList}
-			changeMode={this.changeMode}
-				/>;
+			header = <Header title={'HOME PAGE'} changeMode={this.changeMode} />;
+			nav = <CreateAccount changeMode={this.changeMode} />
+			article = <UpdateAccount 
+				data={this.state.accounts}
+				updateTarget={this.state.updateTarget}
+				targetOfList={this.state.targetOfList}
+				changeMode={this.changeMode} />;
 		}
 		else if(this.state.mode === 'delete_account'){
-			content = <DeleteAccount
-			target={this.state.updateTarget}
-			changeMode={this.changeMode}
-				/>;
+			article = <DeleteAccount
+				target={this.state.updateTarget}
+				changeMode={this.changeMode} />;
 		}
-		else if(this.state.mode === 'read_item')
-			content = <ReadItem resetItem={this.resetItem} data={this.state.items} />
+		else if(this.state.mode === 'read_item'){
+			header = <Header title={'HOME PAGE'} changeMode={this.changeMode} />;
+			article = <ReadItem resetItem={this.resetItem} data={this.state.items} />;
+		}
 
 		return (
 		<div className="App">
-			<div className="sub">
-				<h1>HOME PAGE</h1>
-				<div>crud of accounts, button for read_all_item</div>
-				<br></br><br></br>
-				<CreateAccount changeMode={this.changeMode} />
-				<br></br><br></br>
-				<span>READ: </span>
-				<button onClick={function(){this.changeMode('read_account', null, null)}.bind(this)}>거래처</button>
-				<button onClick={function(){this.changeMode('read_item', null, null)}.bind(this)}>모든상품</button>
-				<br></br><br></br>
-				<button onClick={this.postIt}>POST test</button>
-			</div>
-
-			{content}
-
+			{header}
+			{nav}
+			{article}
 		</div>
 		);
 	}
