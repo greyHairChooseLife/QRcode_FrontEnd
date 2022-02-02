@@ -19,7 +19,6 @@ class App extends Component{
 			targetOfList: null,
 		}
 	}
-
 	changeMode = (mode, target, i) => {
 		this.setState({
 			mode: mode,
@@ -44,16 +43,14 @@ class App extends Component{
 		let header, nav, article = null;
 		
 		if(this.state.mode === 'read_account'){
-			header = <Header title={'HOME PAGE'} changeMode={this.changeMode} />;
-			nav = <CreateAccount changeMode={this.changeMode} />
+			header = <Header mode={this.state.mode} changeMode={this.changeMode} />;
 			article = <ReadAccount
 				resetAccount={this.resetAccount}
 				data={this.state.accounts}
 				changeMode={this.changeMode} />;
 		}
 		else if(this.state.mode === 'update_account'){
-			header = <Header title={'HOME PAGE'} changeMode={this.changeMode} />;
-			nav = <CreateAccount changeMode={this.changeMode} />
+			header = <Header mode={this.state.mode} changeMode={this.changeMode} />;
 			article = <UpdateAccount 
 				data={this.state.accounts}
 				updateTarget={this.state.updateTarget}
@@ -66,8 +63,12 @@ class App extends Component{
 				changeMode={this.changeMode} />;
 		}
 		else if(this.state.mode === 'read_item'){
-			header = <Header title={'HOME PAGE'} changeMode={this.changeMode} />;
+			header = <Header mode={this.state.mode} changeMode={this.changeMode} />;
 			article = <ReadItem resetItem={this.resetItem} data={this.state.items} />;
+		}
+		else if(this.state.mode === 'control_account'){
+			header = <Header mode={this.state.mode} changeMode={this.changeMode} />;
+			article = <p>control by account!!</p>;
 		}
 
 		return (

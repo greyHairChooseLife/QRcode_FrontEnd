@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import CreateAccount from './CreateAccount';
 
 const api = axios.create({
 	baseURL: 'http://localhost:5000',
@@ -21,7 +22,10 @@ class ReadAccount extends Component{
 			(function(m){
 			list.push(
 				<div key={data[m].id}>
-					<button>Control</button>
+					<button onClick={function(){
+						this.props.changeMode('control_account', null, null);
+					}.bind(this)}
+						>Control</button>
 					<span>{data[m].id}</span>
 					<span>{data[m].name}</span>
 					<span>{data[m].registered_date}</span>
@@ -37,6 +41,7 @@ class ReadAccount extends Component{
 		}
 		return (
 			<div className="ReadAccount">
+				<CreateAccount changeMode={this.props.changeMode}/>
 				{list}
 			</div>
 		);
