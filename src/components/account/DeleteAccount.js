@@ -6,20 +6,24 @@ const api = axios.create({
 })
 
 class DeleteAccount extends Component{
+	deleteAccount = async (target) => {
+		if(window.confirm('are you sure??')){
+			const result = await api.post('/accounts/delete_account',{
+					target: target,
+				});
+
+			this.props.onUpdate('read_account', null, null);
+			this.props.doReadAgain();
+		}else{
+			this.props.onUpdate('read_account', null, null);
+			this.props.doReadAgain();
+		}
+	}
 	componentDidMount(){
 		this.deleteAccount(this.props.target);
 	}
-	deleteAccount = (target) => {
-		const result = api.post('/accounts/delete_account',{
-				target: target,
-			});
-	}
 	render(){
-		return (
-			<div>
-			<p>deleted!!</p>
-			</div>
-		);
+		return null;
 	}
 }
 

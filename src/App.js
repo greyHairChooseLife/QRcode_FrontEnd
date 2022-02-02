@@ -72,8 +72,11 @@ class App extends Component{
 				/>;
 		}
 		else if(this.state.mode === 'delete_account'){
-			content = <DeleteAccount target={this.state.updateTarget} onUpdate={this.changeMode} />;
-			
+			content = <DeleteAccount
+			target={this.state.updateTarget}
+			onUpdate={this.changeMode}
+			doReadAgain={this.getEveryAccounts}
+				/>;
 		}
 		else if(this.state.mode === 'read_item')
 			content = 'read items Component';
