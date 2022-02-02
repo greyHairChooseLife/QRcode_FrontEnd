@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class Header extends Component{
 	render(){
 		let title = null;
-		if(this.props.mode === 'control_account'){
+		if(this.props.mode === 'control_item'){
 			title = '상품관리';
 		}else{
 			title = 'HOME PAGE';

@@ -23,7 +23,7 @@ class ReadAccount extends Component{
 			list.push(
 				<div key={data[m].id}>
 					<button onClick={function(){
-						this.props.changeMode('control_account', null, null);
+						this.props.changeMode('control_item', data[m].id, null);
 					}.bind(this)}
 						>Control</button>
 					<span>{data[m].id}</span>

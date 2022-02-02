@@ -20,7 +20,7 @@ class CreateAccount extends Component{
 					e.preventDefault();
 					this.createAccount(e.target.name.value)
 				}.bind(this)}>
-					<input type="text" name="name" placeholder="거래처명"></input>
+					<input type="text" name="name" placeholder="거래처명" />
 					<input type="submit" value="submit" />
 				</form>
 			</div>

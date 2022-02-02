@@ -5,6 +5,7 @@ import ReadAccount from './components/account/ReadAccount';
 import UpdateAccount from './components/account/UpdateAccount';
 import DeleteAccount from './components/account/DeleteAccount';
 import ReadItem from './components/item/ReadItem';
+import ControlItem from './components/item/ControlItem';
 import './App.css';
 
 class App extends Component{
@@ -69,10 +70,10 @@ class App extends Component{
 			nav = <Navigation changeMode={this.changeMode} />
 			article = <ReadItem resetItem={this.resetItem} data={this.state.items} />;
 		}
-		else if(this.state.mode === 'control_account'){
+		else if(this.state.mode === 'control_item'){
 			header = <Header mode={this.state.mode} changeMode={this.changeMode} />;
 			nav = <Navigation changeMode={this.changeMode} />
-			article = <p>control by account!!</p>;
+			article = <ControlItem target={this.state.updateTarget} resetItem={this.resetItem} data={this.state.items} />
 		}
 
 		return (
