@@ -42,6 +42,9 @@ class ReadAccount extends Component{
 		return (
 			<div className="ReadAccount">
 				<CreateAccount changeMode={this.props.changeMode}/>
+				<br></br>
+				<br></br>
+				<br></br>
 				{list}
 			</div>
 		);

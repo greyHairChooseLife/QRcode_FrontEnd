@@ -50,7 +50,6 @@ class UpdateAccount extends Component{
 		return (
 			<div className="UpdateAccount">
 				{list}
-				<p>update procedure</p>
 			</div>
 		);
 	}

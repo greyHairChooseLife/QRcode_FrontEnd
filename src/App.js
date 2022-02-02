@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Header from './components/Header';
-import CreateAccount from './components/account/CreateAccount';
+import Navigation from './components/Navigation';
 import ReadAccount from './components/account/ReadAccount';
 import UpdateAccount from './components/account/UpdateAccount';
 import DeleteAccount from './components/account/DeleteAccount';
@@ -44,6 +44,7 @@ class App extends Component{
 		
 		if(this.state.mode === 'read_account'){
 			header = <Header mode={this.state.mode} changeMode={this.changeMode} />;
+			nav = <Navigation />
 			article = <ReadAccount
 				resetAccount={this.resetAccount}
 				data={this.state.accounts}
