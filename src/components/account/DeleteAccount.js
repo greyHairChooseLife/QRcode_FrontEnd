@@ -11,7 +11,6 @@ class DeleteAccount extends Component{
 			const result = await api.post('/accounts/delete_account',{
 					target: target,
 				});
-
 			this.props.onUpdate('read_account', null, null);
 			this.props.doReadAgain();
 		}else{

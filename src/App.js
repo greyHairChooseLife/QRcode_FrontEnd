@@ -4,7 +4,7 @@ import CreateAccount from './components/account/CreateAccount';
 import ReadAccount from './components/account/ReadAccount';
 import UpdateAccount from './components/account/UpdateAccount';
 import DeleteAccount from './components/account/DeleteAccount';
-import ReadEveryItems from './components/item/ReadEveryItems';
+import ReadItem from './components/item/ReadItem';
 import './App.css';
 
 const api = axios.create({
@@ -42,18 +42,17 @@ class App extends Component{
 		})
 	}
 
-	getEveryItems = async () => {
-		const result = await api.get('/items/read_all');
-		this.setState({
-			items: result.data,
-		})
-	}
-
 	changeMode = (mode, target, i) => {
 		this.setState({
 			mode: mode,
 			updateTarget: target,
 			targetOfList: i, 
+		})
+	}
+
+	updateItem = (items) => {
+		this.setState({
+			items: items,
 		})
 	}
 
@@ -79,7 +78,7 @@ class App extends Component{
 				/>;
 		}
 		else if(this.state.mode === 'read_item')
-			content = 'read items Component';
+			content = <ReadItem updateItem={this.updateItem} data={this.state.items} />
 
 		return (
 		<div className="App">
@@ -90,8 +89,8 @@ class App extends Component{
 				<CreateAccount onPost={this.getEveryAccounts} />
 				<br></br><br></br>
 				<span>READ: </span>
-				<button>accounts</button>
-				<button>items</button>
+				<button onClick={function(){this.changeMode('read_account', null, null)}.bind(this)}>거래처</button>
+				<button onClick={function(){this.changeMode('read_item', null, null)}.bind(this)}>모든상품</button>
 				<br></br><br></br>
 				<button onClick={this.postIt}>POST test</button>
 			</div>
