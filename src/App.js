@@ -73,7 +73,7 @@ class App extends Component{
 		else if(this.state.mode === 'control_item'){
 			header = <Header mode={this.state.mode} changeMode={this.changeMode} />;
 			nav = <Navigation changeMode={this.changeMode} />
-			article = <ControlItem target={this.state.updateTarget} resetItem={this.resetItem} data={this.state.items} />
+			article = <ControlItem target={this.state.updateTarget} resetItem={this.resetItem} data={this.state.items} changeMode={this.changeMode} />
 		}
 
 		return (

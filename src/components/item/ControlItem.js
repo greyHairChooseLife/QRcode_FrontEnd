@@ -7,8 +7,14 @@ const api = axios.create({
 })
 
 class ControlItem extends Component{
+	constructor(props) {
+		super(props);
+		this.state = {
+			target: this.props.target,
+		}
+	}
 	componentDidMount(){
-		this.getItemToControl(this.props.target);
+		this.getItemToControl(this.state.target);
 	}
 	getItemToControl = async (account_id) => {
 		const result = await api.get(`/items/control_item?account_id=${account_id}`);
@@ -32,7 +38,7 @@ class ControlItem extends Component{
 
 		return (
 			<div className="ReadItem">
-				<UploadXlsx />
+				<UploadXlsx target={this.state.target} changeMode={this.props.changeMode} resetItem={this.props.resetItem} />
 				{list}
 			</div>
 		);
