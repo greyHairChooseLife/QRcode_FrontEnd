@@ -11,8 +11,8 @@ class ControlItem extends Component{
 		super(props);
 		this.state = {
 			target: this.props.target,
-			old_data: null,
-			new_data: null,
+			old_data: [],
+			new_data: [],
 		}
 	}
 	componentDidMount(){
@@ -25,31 +25,55 @@ class ControlItem extends Component{
 		})
 		this.props.resetItem(result.data);
 	}
-	getNewData = (new_data) => {
+	getUploadedData = (uploaded_data) => {
 		this.setState({
-			new_data: new_data,
+			new_data: uploaded_data,
 		})
 	}
 
 	render(){
-		let list = [];
-		const data = this.props.data;
-		for(var i=0; i<data.length; i++){
-			list.push(
-				<div key={i}>
-					<span>{data[i].code}</span>
-					<span>{data[i].name}</span>
-					<span>{data[i].purchase_cost}</span>
-					<span>{data[i].registered_date}</span>
-					<span>{data[i].size}</span>
-				</div>
-			)
+		let create_list = [];
+		let update_list = [];
+		const { old_data, new_data } = this.state;
+		for(var i=0; i<new_data.length; i++){
+			for(var j=0; j<old_data.length; j++){
+				if(new_data[i].code === old_data[j].code){
+					update_list.push(
+						<div key={'key' + old_data[j].code + i + j}>
+							<div>
+								<span>{new_data[i].code}</span>
+								<span>{new_data[i].name}</span>
+								<span>{new_data[i].purchase_cost}</span>
+								<span>{new_data[i].size}</span>
+							</div>
+							<div>
+								<span>{old_data[j].code}</span>
+								<span>{old_data[j].name}</span>
+								<span>{old_data[j].purchase_cost}</span>
+								<span>{old_data[j].size}</span>
+							</div>
+						</div>
+					)
+					break;
+				}else if(j === old_data.length-1 && new_data[i].code !== old_data[j].code){
+					create_list.push(
+						<div key={'key' + new_data[i].code + i + j}>
+							<span>{new_data[i].code}</span>
+							<span>{new_data[i].name}</span>
+							<span>{new_data[i].purchase_cost}</span>
+							<span>{new_data[i].size}</span>
+						</div>
+					)
+				}
+			}
 		}
 
 		return (
 			<div className="ReadItem">
-				<UploadXlsx target={this.state.target} changeMode={this.props.changeMode} getNewData={this.getNewData} resetItem={this.props.resetItem} />
-				{list}
+				<UploadXlsx target={this.state.target} changeMode={this.props.changeMode} getUploadedData={this.getUploadedData} resetItem={this.props.resetItem} />
+				{create_list}
+				<p>________ UPPER : NEW ____ UNDDER : COMPARE ________</p>
+				{update_list}
 			</div>
 		);
 	}

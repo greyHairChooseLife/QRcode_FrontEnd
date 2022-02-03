@@ -21,6 +21,17 @@ class UploadXlsx extends Component{
 		this.props.changeMode('just for re-rendering', null, null);
 		this.props.changeMode('control_item', account_id, null);
 	}
+	updateItem = async (account_id) => {
+		const result = await api.post(`/items/create_item?account_id=${account_id}`, {
+
+
+
+
+
+		});
+		this.props.changeMode('just for re-rendering', null, null);
+		this.props.changeMode('control_item', account_id, null);
+	}
 	readFile = async (e) => {
 		const file = e.target.files[0];
 		const data = await file.arrayBuffer();
@@ -30,16 +41,17 @@ class UploadXlsx extends Component{
 		let Obj = [];
 		for(var i=0; i<jsonData.length; i++){
 			Obj.push({
-				code: jsonData[i]['상품코드'],
+				code: String(jsonData[i]['상품코드']),
 				name: jsonData[i]['상품명'],
 				purchase_cost: jsonData[i]['매입원가'],
+				registered_date: new Date(),
 				size: jsonData[i]['규격']
 			});
 		}
 		this.setState({
 			list: Obj,
 		});
-		this.props.getNewData(Obj);
+		this.props.getUploadedData(Obj);
 	}
 
 	render(){
@@ -55,32 +67,6 @@ class UploadXlsx extends Component{
 				<br />
 				<input type="submit" value="저장하기" readOnly />
 			</form>;
-		let items = [];
-		if(this.state.list !== null){
-			for(var i=0; i<this.state.list.length; i++){
-				items.push(
-					<div key={i}>
-						<div>
-							<span>{this.state.list[i].code}</span>
-							<span>{this.state.list[i].name}</span>
-							<span>{this.state.list[i].purchase_cost}</span>
-							<span>{this.state.list[i].size}</span>
-						</div>
-						<p>---------------------------------------</p>
-						<span>{this.state.list[i].code}</span>
-						<span>{this.state.list[i].name}</span>
-						<span>{this.state.list[i].purchase_cost}</span>
-						<span>{this.state.list[i].size}</span>
-						<div>
-							<span>{this.state.list[i].code}</span>
-							<span>{this.state.list[i].name}</span>
-							<span>{this.state.list[i].purchase_cost}</span>
-							<span>{this.state.list[i].size}</span>
-						</div>
-					</div>
-				)
-			}
-		}
 
 		return (
 			<div className="uploadXlsx">
