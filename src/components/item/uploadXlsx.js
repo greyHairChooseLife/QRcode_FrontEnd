@@ -39,6 +39,7 @@ class UploadXlsx extends Component{
 		this.setState({
 			list: Obj,
 		});
+		this.props.getNewData(Obj);
 	}
 
 	render(){
@@ -59,10 +60,23 @@ class UploadXlsx extends Component{
 			for(var i=0; i<this.state.list.length; i++){
 				items.push(
 					<div key={i}>
+						<div>
+							<span>{this.state.list[i].code}</span>
+							<span>{this.state.list[i].name}</span>
+							<span>{this.state.list[i].purchase_cost}</span>
+							<span>{this.state.list[i].size}</span>
+						</div>
+						<p>---------------------------------------</p>
 						<span>{this.state.list[i].code}</span>
 						<span>{this.state.list[i].name}</span>
 						<span>{this.state.list[i].purchase_cost}</span>
 						<span>{this.state.list[i].size}</span>
+						<div>
+							<span>{this.state.list[i].code}</span>
+							<span>{this.state.list[i].name}</span>
+							<span>{this.state.list[i].purchase_cost}</span>
+							<span>{this.state.list[i].size}</span>
+						</div>
 					</div>
 				)
 			}
@@ -71,7 +85,6 @@ class UploadXlsx extends Component{
 		return (
 			<div className="uploadXlsx">
 				{uploadFunction}
-				{items}
 			</div>
 		);
 	}

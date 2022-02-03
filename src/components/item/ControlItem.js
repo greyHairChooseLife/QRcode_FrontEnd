@@ -11,6 +11,8 @@ class ControlItem extends Component{
 		super(props);
 		this.state = {
 			target: this.props.target,
+			old_data: null,
+			new_data: null,
 		}
 	}
 	componentDidMount(){
@@ -18,7 +20,15 @@ class ControlItem extends Component{
 	}
 	getItemToControl = async (account_id) => {
 		const result = await api.get(`/items/control_item?account_id=${account_id}`);
+		this.setState({
+			old_data: result.data,
+		})
 		this.props.resetItem(result.data);
+	}
+	getNewData = (new_data) => {
+		this.setState({
+			new_data: new_data,
+		})
 	}
 
 	render(){
@@ -38,7 +48,7 @@ class ControlItem extends Component{
 
 		return (
 			<div className="ReadItem">
-				<UploadXlsx target={this.state.target} changeMode={this.props.changeMode} resetItem={this.props.resetItem} />
+				<UploadXlsx target={this.state.target} changeMode={this.props.changeMode} getNewData={this.getNewData} resetItem={this.props.resetItem} />
 				{list}
 			</div>
 		);
