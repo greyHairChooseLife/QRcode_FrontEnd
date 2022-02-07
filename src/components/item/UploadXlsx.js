@@ -11,30 +11,36 @@ class UploadXlsx extends Component{
 		super(props);
 		this.state = {
 			target: this.props.target,
-			tempReadData: null,
-			itemToCreate: null,
-			itemToUpdate: null,
-			itemToDelete: null,
+			newData: null,
+			updateItemInfo: {
+				toCreate: null,
+				toUpdate: null,
+				toDelete: null,
+			}
 
 		}
 	}
+
 	createItem = async (account_id) => {
 		const result = await api.post(`/items/create_item?account_id=${account_id}`, {
-			item: this.state.itemToCreate,
+			item: this.state.updateItemInfo.toCreate,
 		});
 	}
+
 	updateItem = async (account_id) => {
 		const result = await api.post(`/items/update_item?account_id=${account_id}`, {
-			item: this.state.itemToUpdate,
+			item: this.state.updateItemInfo.toUpdate,
 		});
 	}
+	j
 	deleteItem = async (account_id) => {
 		const result = await api.post(`/items/delete_item?account_id=${account_id}`, {
-			item: this.state.itemToDelete,
+			item: this.state.updateItemInfo.toDelete,
 		});
 		this.props.changeRootMode('just for re-rendering', null, null);
 		this.props.changeRootMode('control_item', account_id, null);
 	}
+
 	readFile = async (e) => {
 		const file = e.target.files[0];
 		const data = await file.arrayBuffer();
@@ -52,10 +58,33 @@ class UploadXlsx extends Component{
 			});
 		}
 		this.setState({
-			tempReadData: Obj,
+			newData: Obj,
 		});
-		this.props.setUploadedData(Obj);
-		this.props.changeMode('read_uploaded');
+	}
+
+	compareCurrentAndNew = () => {
+		const currentData = this.props.currentData;
+		const newData = this.state.newData;
+		let tempCreate = [];
+		let tempUpdate = [];
+		for(var i=0; i<newData.length; i++){
+			for(var j=0; j<currentData.length; j++){
+				if(newData[i].code === currentData[j].code){
+					tempUpdate.push(newData[i])
+					break;
+				}else if(j === currentData.length-1 && newData[i].code !== currentData[j].code){
+					tempCreate.push(newData[i])
+				}
+			}
+		}
+		this.setState({
+			updateItemInfo: {
+				...this.state.updateItemInfo,
+				toCreate: tempCreate,
+				toUpdate: tempUpdate,
+			}
+		})
+		return this.state.updateItemInfo;
 	}
 
 	render(){
@@ -63,12 +92,12 @@ class UploadXlsx extends Component{
 			<form onSubmit={function(e){
 				e.preventDefault();
 				this.createItem(this.state.target);
-				this.updateItem(this.state.target);
-				this.deleteItem(this.state.target);
 			}.bind(this)}>
-				<input type="file" accept=".xlsx" name="uploaded" onChange={function(e){
+				<input type="file" accept=".xlsx" name="uploaded" onChange={async function(e){
 				e.preventDefault();
-				this.readFile(e);
+				await this.readFile(e);
+				this.props.setUploadedData(await this.compareCurrentAndNew());
+				this.props.changeMode('read_uploaded');
 				}.bind(this)} />
 				<br />
 				<input type="submit" value="저장하기" readOnly />
