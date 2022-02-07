@@ -11,15 +11,15 @@ class UploadXlsx extends Component{
 		super(props);
 		this.state = {
 			target: this.props.target,
-			list: null,
+			tempReadData: null,
 		}
 	}
 	createItem = async (account_id) => {
 		const result = await api.post(`/items/create_item?account_id=${account_id}`, {
-			item: this.state.list,
+			item: this.state.tempReadData,
 		});
-		this.props.changeMode('just for re-rendering', null, null);
-		this.props.changeMode('control_item', account_id, null);
+		this.props.changeRootMode('just for re-rendering', null, null);
+		this.props.changeRootMode('control_item', account_id, null);
 	}
 	updateItem = async (account_id) => {
 		const result = await api.post(`/items/create_item?account_id=${account_id}`, {
@@ -29,8 +29,8 @@ class UploadXlsx extends Component{
 
 
 		});
-		this.props.changeMode('just for re-rendering', null, null);
-		this.props.changeMode('control_item', account_id, null);
+		this.props.changeRootMode('just for re-rendering', null, null);
+		this.props.changeRootMode('control_item', account_id, null);
 	}
 	readFile = async (e) => {
 		const file = e.target.files[0];
@@ -49,9 +49,10 @@ class UploadXlsx extends Component{
 			});
 		}
 		this.setState({
-			list: Obj,
+			tempReadData: Obj,
 		});
-		this.props.getUploadedData(Obj);
+		this.props.setUploadedData(Obj);
+		this.props.changeMode('read_uploaded');
 	}
 
 	render(){

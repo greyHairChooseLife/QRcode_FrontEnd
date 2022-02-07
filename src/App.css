@@ -34,7 +34,7 @@
 	text-align: left;
 }
 
-.ReadItem {
+.ControlItem {
 	margin-left: 5vw;
 	grid-column: 1/2;
 	grid-row: 4/5;
