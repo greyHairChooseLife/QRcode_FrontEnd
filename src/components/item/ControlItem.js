@@ -42,9 +42,12 @@ class ControlItem extends Component{
 		let update_list = [];
 		let current_list = [];
 		if(this.state.mode === 'read_current'){
+			current_list.push(
+				<p key={'current_line'}>________ LEGACY ________</p>
+			)
 			for(var i=0; i<this.state.old_data.length; i++){
 				current_list.push(
-					<div key={this.state.old_data[i].code}>
+					<div key={'current' + this.state.old_data[i].code}>
 						<span>{this.state.old_data[i].code}</span>
 						<span>{this.state.old_data[i].name}</span>
 						<span>{this.state.old_data[i].purchase_cost}</span>
@@ -54,11 +57,17 @@ class ControlItem extends Component{
 			}
 		}else if(this.state.mode === 'read_uploaded'){
 			const { old_data, new_data } = this.state;
+			update_list.push(
+				<p key={'update_line'}>________ UPDATE ________</p>
+			)
+			create_list.push(
+				<p key={'create_line'}>________ NEW ________</p>
+			)
 			for(var i=0; i<new_data.length; i++){
 				for(var j=0; j<old_data.length; j++){
 					if(new_data[i].code === old_data[j].code){
 						update_list.push(
-							<div key={old_data[j].code}>
+							<div key={'update' + old_data[j].code}>
 								<div>
 									<span>{new_data[i].code}</span>
 									<span>{new_data[i].name}</span>
@@ -76,12 +85,11 @@ class ControlItem extends Component{
 						break;
 					}else if(j === old_data.length-1 && new_data[i].code !== old_data[j].code){
 						create_list.push(
-							<div key={'key' + new_data[i].code + i + j}>
+							<div key={'create' + new_data[i].code}>
 								<span>{new_data[i].code}</span>
 								<span>{new_data[i].name}</span>
 								<span>{new_data[i].purchase_cost}</span>
 								<span>{new_data[i].size}</span>
-								<p>________ UPPER : NEW ____ UNDDER : COMPARE ________</p>
 							</div>
 						)
 					}

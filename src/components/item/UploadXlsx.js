@@ -12,22 +12,25 @@ class UploadXlsx extends Component{
 		this.state = {
 			target: this.props.target,
 			tempReadData: null,
+			itemToCreate: null,
+			itemToUpdate: null,
+			itemToDelete: null,
+
 		}
 	}
 	createItem = async (account_id) => {
 		const result = await api.post(`/items/create_item?account_id=${account_id}`, {
-			item: this.state.tempReadData,
+			item: this.state.itemToCreate,
 		});
-		this.props.changeRootMode('just for re-rendering', null, null);
-		this.props.changeRootMode('control_item', account_id, null);
 	}
 	updateItem = async (account_id) => {
-		const result = await api.post(`/items/create_item?account_id=${account_id}`, {
-
-
-
-
-
+		const result = await api.post(`/items/update_item?account_id=${account_id}`, {
+			item: this.state.itemToUpdate,
+		});
+	}
+	deleteItem = async (account_id) => {
+		const result = await api.post(`/items/delete_item?account_id=${account_id}`, {
+			item: this.state.itemToDelete,
 		});
 		this.props.changeRootMode('just for re-rendering', null, null);
 		this.props.changeRootMode('control_item', account_id, null);
@@ -60,6 +63,8 @@ class UploadXlsx extends Component{
 			<form onSubmit={function(e){
 				e.preventDefault();
 				this.createItem(this.state.target);
+				this.updateItem(this.state.target);
+				this.deleteItem(this.state.target);
 			}.bind(this)}>
 				<input type="file" accept=".xlsx" name="uploaded" onChange={function(e){
 				e.preventDefault();
