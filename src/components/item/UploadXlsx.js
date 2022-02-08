@@ -16,7 +16,6 @@ class UploadXlsx extends Component{
 				toCreate: null,
 				toUpdate: null,
 				toCurrent: null,
-				toDelete: null,
 			}
 
 		}
@@ -33,13 +32,6 @@ class UploadXlsx extends Component{
 		//조건문 : 백엔드로 보낼 데이터가 존재 할 때에만 실제로 http요청 보내도록
 		const result = await api.post(`/items/update_item?account_id=${account_id}`, {
 			item: this.state.updateItemInfo.toUpdate,
-		});
-	}
-
-	deleteItem = async (account_id) => {
-		//조건문 : 백엔드로 보낼 데이터가 존재 할 때에만 실제로 http요청 보내도록
-		const result = await api.post(`/items/delete_item?account_id=${account_id}`, {
-			item: this.state.updateItemInfo.toDelete,
 		});
 		this.props.changeRootMode('just for re-rendering', null, null);
 		this.props.changeRootMode('control_item', account_id, null);
