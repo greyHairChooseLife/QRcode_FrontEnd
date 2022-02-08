@@ -22,17 +22,20 @@ class UploadXlsx extends Component{
 	}
 
 	createItem = async (account_id) => {
-		//조건문 : 백엔드로 보낼 데이터가 존재 할 때에만 실제로 http요청 보내도록
-		const result = await api.post(`/items/create_item?account_id=${account_id}`, {
-			item: this.state.updateItemInfo.toCreate,
-		});
+		if(this.state.updateItemInfo.toCreate.length > 0){	//백엔드로 보낼 데이터가 존재 할 때에만
+			const result = await api.post(`/items/create_item?account_id=${account_id}`, {
+				item: this.state.updateItemInfo.toCreate,
+			});
+		}
 	}
 
 	updateItem = async (account_id) => {
-		//조건문 : 백엔드로 보낼 데이터가 존재 할 때에만 실제로 http요청 보내도록
-		const result = await api.post(`/items/update_item?account_id=${account_id}`, {
-			item: this.state.updateItemInfo.toUpdate,
-		});
+		if(this.state.updateItemInfo.toUpdate.length > 0){	//백엔드로 보낼 데이터가 존재 할 때에만
+			console.log('update is processed');
+			const result = await api.post(`/items/update_item?account_id=${account_id}`, {
+				item: this.state.updateItemInfo.toUpdate,
+			});
+		}
 		this.props.changeRootMode('just for re-rendering', null, null);
 		this.props.changeRootMode('control_item', account_id, null);
 	}
@@ -56,6 +59,12 @@ class UploadXlsx extends Component{
 		this.setState({
 			newData: Obj,
 		});
+	}
+
+	checkValidity = async () => {
+	//모든 상품 코드가 서로 다른 값인지, 각 column의 데이터는 모두 올바른 타입인지
+	//빈 칸은 undefined로 읽어버린다. 이거 값이 없으면 ''으로 값이 없는 상태로 정의해주자
+	//파일의 데이터에 에러가 있다면 그게 무엇이고 어떻게 바로잡는지 피드백하는 기능
 	}
 
 	compareCurrentAndNew = () => {
