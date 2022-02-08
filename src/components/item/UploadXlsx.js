@@ -22,18 +22,21 @@ class UploadXlsx extends Component{
 	}
 
 	createItem = async (account_id) => {
+		//조건문 : 백엔드로 보낼 데이터가 존재 할 때에만 실제로 http요청 보내도록
 		const result = await api.post(`/items/create_item?account_id=${account_id}`, {
 			item: this.state.updateItemInfo.toCreate,
 		});
 	}
 
 	updateItem = async (account_id) => {
+		//조건문 : 백엔드로 보낼 데이터가 존재 할 때에만 실제로 http요청 보내도록
 		const result = await api.post(`/items/update_item?account_id=${account_id}`, {
 			item: this.state.updateItemInfo.toUpdate,
 		});
 	}
-	j
+
 	deleteItem = async (account_id) => {
+		//조건문 : 백엔드로 보낼 데이터가 존재 할 때에만 실제로 http요청 보내도록
 		const result = await api.post(`/items/delete_item?account_id=${account_id}`, {
 			item: this.state.updateItemInfo.toDelete,
 		});
@@ -71,7 +74,10 @@ class UploadXlsx extends Component{
 			for(var i=0; i<newData.length; i++){
 				for(var j=0; j<currentData.length; j++){
 					if(newData[i].code === currentData[j].code){
-						tempUpdate.push(newData[i]);
+						if(newData[i].name !== currentData[j].name || newData[i].purchase_cost !== currentData[j].purchase_cost || newData[i].size !== currentData[j].size){
+							console.log('tpyeOF: ', newData[i].name,  currentData[j].name, newData[i].purchase_cost, currentData[j].purchase_cost, newData[i].size, currentData[j].size);
+							tempUpdate.push(newData[i]);
+						}
 						break;
 					}else if(j === currentData.length-1 && newData[i].code !== currentData[j].code){
 						tempCreate.push(newData[i]);
@@ -106,6 +112,7 @@ class UploadXlsx extends Component{
 			<form onSubmit={function(e){
 				e.preventDefault();
 				this.createItem(this.state.target);
+				this.updateItem(this.state.target);
 			}.bind(this)}>
 				<input type="file" accept=".xlsx" name="uploaded" onChange={async function(e){
 				e.preventDefault();
