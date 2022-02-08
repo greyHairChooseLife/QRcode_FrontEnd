@@ -74,11 +74,11 @@ class ControlItem extends Component{
 					if(this.state.uploadedData.toUpdate[i].code === this.state.currentData[j].code){
 						update_list.push(
 							<div key={'update' + this.state.uploadedData.toUpdate[i].code}>
-								<div>
-									<span>{this.state.uploadedData.toUpdate[i].code}</span>
-									<span>{this.state.uploadedData.toUpdate[i].name}</span>
-									<span>{this.state.uploadedData.toUpdate[i].purchase_cost}</span>
-									<span>{this.state.uploadedData.toUpdate[i].size}</span>
+								<div className="currentDataComparing">
+									<span>{this.state.uploadedData.toCurrent[i].code}</span>
+									<span>{this.state.uploadedData.toCurrent[i].name}</span>
+									<span>{this.state.uploadedData.toCurrent[i].purchase_cost}</span>
+									<span>{this.state.uploadedData.toCurrent[i].size}</span>
 								</div>
 								<div>
 									<span>{this.state.uploadedData.toUpdate[i].code}</span>

@@ -15,6 +15,7 @@ class UploadXlsx extends Component{
 			updateItemInfo: {
 				toCreate: null,
 				toUpdate: null,
+				toCurrent: null,
 				toDelete: null,
 			}
 
@@ -70,13 +71,14 @@ class UploadXlsx extends Component{
 		const newData = this.state.newData;
 		let tempCreate = [];
 		let tempUpdate = [];
+		let tempCurrent = [];
 		if(currentData.length > 0){
 			for(var i=0; i<newData.length; i++){
 				for(var j=0; j<currentData.length; j++){
 					if(newData[i].code === currentData[j].code){
 						if(newData[i].name !== currentData[j].name || newData[i].purchase_cost !== currentData[j].purchase_cost || newData[i].size !== currentData[j].size){
-							console.log('tpyeOF: ', newData[i].name,  currentData[j].name, newData[i].purchase_cost, currentData[j].purchase_cost, newData[i].size, currentData[j].size);
 							tempUpdate.push(newData[i]);
+							tempCurrent.push(currentData[j]);
 						}
 						break;
 					}else if(j === currentData.length-1 && newData[i].code !== currentData[j].code){
@@ -89,6 +91,7 @@ class UploadXlsx extends Component{
 					...this.state.updateItemInfo,
 					toCreate: tempCreate,
 					toUpdate: tempUpdate,
+					toCurrent: tempCurrent,
 				}
 			})
 			return this.state.updateItemInfo;
@@ -101,6 +104,7 @@ class UploadXlsx extends Component{
 					...this.state.updateItemInfo,
 					toCreate: tempCreate,
 					toUpdate: tempUpdate,
+					toCurrent: tempCurrent,
 				}
 			})
 			return this.state.updateItemInfo;
