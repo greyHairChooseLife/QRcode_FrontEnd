@@ -67,24 +67,38 @@ class UploadXlsx extends Component{
 		const newData = this.state.newData;
 		let tempCreate = [];
 		let tempUpdate = [];
-		for(var i=0; i<newData.length; i++){
-			for(var j=0; j<currentData.length; j++){
-				if(newData[i].code === currentData[j].code){
-					tempUpdate.push(newData[i])
-					break;
-				}else if(j === currentData.length-1 && newData[i].code !== currentData[j].code){
-					tempCreate.push(newData[i])
+		if(currentData.length > 0){
+			for(var i=0; i<newData.length; i++){
+				for(var j=0; j<currentData.length; j++){
+					if(newData[i].code === currentData[j].code){
+						tempUpdate.push(newData[i]);
+						break;
+					}else if(j === currentData.length-1 && newData[i].code !== currentData[j].code){
+						tempCreate.push(newData[i]);
+					}
 				}
 			}
-		}
-		this.setState({
-			updateItemInfo: {
-				...this.state.updateItemInfo,
-				toCreate: tempCreate,
-				toUpdate: tempUpdate,
+			this.setState({
+				updateItemInfo: {
+					...this.state.updateItemInfo,
+					toCreate: tempCreate,
+					toUpdate: tempUpdate,
+				}
+			})
+			return this.state.updateItemInfo;
+		}else{
+			for(var i=0; i<newData.length; i++){
+				tempCreate.push(newData[i]);
 			}
-		})
-		return this.state.updateItemInfo;
+			this.setState({
+				updateItemInfo: {
+					...this.state.updateItemInfo,
+					toCreate: tempCreate,
+					toUpdate: tempUpdate,
+				}
+			})
+			return this.state.updateItemInfo;
+		}
 	}
 
 	render(){
