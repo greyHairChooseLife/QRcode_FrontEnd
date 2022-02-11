@@ -38,6 +38,7 @@ class ControlItem extends Component{
 	}
 
 	render(){
+		let file_error_list = [];
 		let create_list = [];
 		let update_list = [];
 		let current_list = [];
@@ -57,6 +58,7 @@ class ControlItem extends Component{
 				);
 			}
 		}else if(this.state.mode === 'read_uploaded'){
+			file_error_list.push(<p key={'error_line'}>________ ERROR ________</p>);
 			create_list.push(<p key={'create_line'}>________ NEW ________</p>);
 			update_list.push(<p key={'update_line'}>________ UPDATE ________</p>);
 			for(var i=0; i<this.state.uploadedData.toCreate.length; i++){
@@ -91,11 +93,22 @@ class ControlItem extends Component{
 					}
 				}
 			}
+			for(var i=0; i<this.state.uploadedData.toError.length; i++){
+				file_error_list.push(
+					<div key={'create' + this.state.uploadedData.toError[i].code}>
+						<span>{this.state.uploadedData.toError[i].code}</span>
+						<span>{this.state.uploadedData.toError[i].name}</span>
+						<span>{this.state.uploadedData.toError[i].purchase_cost}</span>
+						<span>{this.state.uploadedData.toError[i].size}</span>
+					</div>
+				);
+			}
 		}
 
 		return (
 			<div className="ControlItem">
 				<UploadXlsx target={this.state.target} currentData={this.state.currentData} changeRootMode={this.props.changeMode} changeMode={this.changeMode} setUploadedData={this.setUploadedData} resetItem={this.props.resetItem} />
+				{file_error_list}
 				{create_list}
 				{update_list}
 				{current_list}
