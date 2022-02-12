@@ -63,19 +63,27 @@ class UploadXlsx extends Component{
 	}
 
 	checkValidity = () => {
-		let tempError =[];
+		let codeError =[];
+		let emptyError =[];
 		for(var i=0; i<this.state.newData.length; i++){
 			for(var j=i+1; j<this.state.newData.length; j++){
 				if(this.state.newData[i].code === this.state.newData[j].code){
-					tempError.push(this.state.newData[i]);
+					codeError.push(this.state.newData[i]);
 				}
 			}
 		}
-		if(tempError.length > 0){
+		for(var i=0; i<this.state.newData.length; i++){
+			if(this.state.newData[i].code === undefined ||
+				this.state.newData[i].name === undefined ||
+				this.state.newData[i].purchase_cost === undefined)
+				emptyError.push(this.state.newData[i]);
+		}
+		if(codeError.length > 0 || emptyError.length > 0){
 			this.setState({
 				updateItemInfo: {
 					...this.state.updateItemInfo,
-					toError: tempError,
+					codeError: codeError,
+					emptyError: emptyError,
 				}
 			})
 			return true;

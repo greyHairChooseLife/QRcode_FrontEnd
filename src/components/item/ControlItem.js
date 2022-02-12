@@ -94,13 +94,13 @@ class ControlItem extends Component{
 				}
 			}
 		}else if(this.state.mode === 'read_file_error'){
-			for(var i=0; i<this.state.uploadedData.toError.length; i++){
+			for(var i=0; i<this.state.uploadedData.codeError.length; i++){
 				file_error_list.push(
-					<div key={'create' + this.state.uploadedData.toError[i].code}>
-						<span>{this.state.uploadedData.toError[i].code}</span>
-						<span>{this.state.uploadedData.toError[i].name}</span>
-						<span>{this.state.uploadedData.toError[i].purchase_cost}</span>
-						<span>{this.state.uploadedData.toError[i].size}</span>
+					<div key={'create' + this.state.uploadedData.codeError[i].code}>
+						<span>{this.state.uploadedData.codeError[i].code}</span>
+						<span>{this.state.uploadedData.codeError[i].name}</span>
+						<span>{this.state.uploadedData.codeError[i].purchase_cost}</span>
+						<span>{this.state.uploadedData.codeError[i].size}</span>
 					</div>
 				);
 			}
