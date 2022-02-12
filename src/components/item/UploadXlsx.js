@@ -78,10 +78,12 @@ class UploadXlsx extends Component{
 					toError: tempError,
 				}
 			})
+			return true;
 		}
 	//모든 상품 코드가 서로 다른 값인지, 각 column의 데이터는 모두 올바른 타입인지
 	//빈 칸은 undefined로 읽어버린다. 이거 값이 없으면 ''으로 값이 없는 상태로 정의해주자
 	//파일의 데이터에 에러가 있다면 그게 무엇이고 어떻게 바로잡는지 피드백하는 기능
+		return false;
 	}
 
 	compareCurrentAndNew = () => {
@@ -139,9 +141,13 @@ class UploadXlsx extends Component{
 				<input type="file" accept=".xlsx" name="uploaded" onChange={async function(e){
 				e.preventDefault();
 				await this.readFile(e);
-				this.checkValidity();
-				this.props.setUploadedData(await this.compareCurrentAndNew());
-				this.props.changeMode('read_uploaded');
+				if(this.checkValidity()){
+					this.props.setUploadedData(await this.compareCurrentAndNew());
+					this.props.changeMode('read_file_error');
+				}else{
+					this.props.setUploadedData(await this.compareCurrentAndNew());
+					this.props.changeMode('read_uploaded');
+				}
 				}.bind(this)} />
 				<br />
 				<input type="submit" value="저장하기" readOnly />

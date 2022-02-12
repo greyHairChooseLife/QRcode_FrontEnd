@@ -93,6 +93,7 @@ class ControlItem extends Component{
 					}
 				}
 			}
+		}else if(this.state.mode === 'read_file_error'){
 			for(var i=0; i<this.state.uploadedData.toError.length; i++){
 				file_error_list.push(
 					<div key={'create' + this.state.uploadedData.toError[i].code}>
