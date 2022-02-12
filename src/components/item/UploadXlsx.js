@@ -65,14 +65,14 @@ class UploadXlsx extends Component{
 	checkValidity = () => {
 		let codeError =[];
 		let emptyError =[];
-		for(var i=0; i<this.state.newData.length; i++){
+		for(var i=0; i<this.state.newData.length; i++){		//코드 중복 오류
 			for(var j=i+1; j<this.state.newData.length; j++){
 				if(this.state.newData[i].code === this.state.newData[j].code){
 					codeError.push(this.state.newData[i]);
 				}
 			}
 		}
-		for(var i=0; i<this.state.newData.length; i++){
+		for(var i=0; i<this.state.newData.length; i++){		//필수 정보 누락 오류
 			if(this.state.newData[i].code === undefined ||
 				this.state.newData[i].name === undefined ||
 				this.state.newData[i].purchase_cost === undefined)
@@ -88,9 +88,6 @@ class UploadXlsx extends Component{
 			})
 			return true;
 		}
-	//모든 상품 코드가 서로 다른 값인지, 각 column의 데이터는 모두 올바른 타입인지
-	//빈 칸은 undefined로 읽어버린다. 이거 값이 없으면 ''으로 값이 없는 상태로 정의해주자
-	//파일의 데이터에 에러가 있다면 그게 무엇이고 어떻게 바로잡는지 피드백하는 기능
 		return false;
 	}
 

@@ -58,7 +58,6 @@ class ControlItem extends Component{
 				);
 			}
 		}else if(this.state.mode === 'read_uploaded'){
-			file_error_list.push(<p key={'error_line'}>________ ERROR ________</p>);
 			create_list.push(<p key={'create_line'}>________ NEW ________</p>);
 			update_list.push(<p key={'update_line'}>________ UPDATE ________</p>);
 			for(var i=0; i<this.state.uploadedData.toCreate.length; i++){
@@ -94,13 +93,19 @@ class ControlItem extends Component{
 				}
 			}
 		}else if(this.state.mode === 'read_file_error'){
+			file_error_list.push(<p key={'code_error_line'}>________ CODE ERROR ________</p>);
 			for(var i=0; i<this.state.uploadedData.codeError.length; i++){
 				file_error_list.push(
-					<div key={'create' + this.state.uploadedData.codeError[i].code}>
+					<div key={'codeError' + this.state.uploadedData.codeError[i].code}>
 						<span>{this.state.uploadedData.codeError[i].code}</span>
-						<span>{this.state.uploadedData.codeError[i].name}</span>
-						<span>{this.state.uploadedData.codeError[i].purchase_cost}</span>
-						<span>{this.state.uploadedData.codeError[i].size}</span>
+					</div>
+				);
+			}
+			file_error_list.push(<p key={'empty_error_line'}>________ EMPTY ERROR ________</p>);
+			for(var i=0; i<this.state.uploadedData.emptyError.length; i++){
+				file_error_list.push(
+					<div key={'emptyError' + this.state.uploadedData.emptyError[i].code}>
+						<span>{this.state.uploadedData.emptyError[i].code}</span>
 					</div>
 				);
 			}
