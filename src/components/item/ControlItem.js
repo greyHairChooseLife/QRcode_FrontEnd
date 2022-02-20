@@ -48,12 +48,17 @@ class ControlItem extends Component{
 				<p key={'current_line'}>________ LEGACY ________</p>
 			)
 			for(var i=0; i<currentData.length; i++){
+				const size = [300, 300];
+				const root_url = `https://chart.googleapis.com/chart?cht=qr&chs=${size[0]}x${size[1]}&chl=http://localhost:5000/customer/readItem/${this.state.target}/${currentData[i].code}`;
 				current_list.push(
 					<div key={'current' + currentData[i].code}>
 						<span>{currentData[i].code}</span>
 						<span>{currentData[i].name}</span>
 						<span>{currentData[i].purchase_cost}</span>
 						<span>{currentData[i].size}</span>
+						<span>{currentData[i].barcode}</span>
+						<a href={`http://localhost:5000/customer/readItem/${this.state.target}/${currentData[i].code}`} target="_blank">customerPage</a>
+						<a href={root_url} target="_blank">QRcode</a>
 					</div>
 				);
 			}
@@ -67,6 +72,7 @@ class ControlItem extends Component{
 						<span>{this.state.uploadedData.toCreate[i].name}</span>
 						<span>{this.state.uploadedData.toCreate[i].purchase_cost}</span>
 						<span>{this.state.uploadedData.toCreate[i].size}</span>
+						<span>{this.state.uploadedData.toCreate[i].barcode}</span>
 					</div>
 				);
 			}
@@ -80,12 +86,14 @@ class ControlItem extends Component{
 									<span>{this.state.uploadedData.toCurrent[i].name}</span>
 									<span>{this.state.uploadedData.toCurrent[i].purchase_cost}</span>
 									<span>{this.state.uploadedData.toCurrent[i].size}</span>
+									<span>{this.state.uploadedData.toCurrent[i].barcode}</span>
 								</div>
 								<div>
 									<span>{this.state.uploadedData.toUpdate[i].code}</span>
 									<span>{this.state.uploadedData.toUpdate[i].name}</span>
 									<span>{this.state.uploadedData.toUpdate[i].purchase_cost}</span>
 									<span>{this.state.uploadedData.toUpdate[i].size}</span>
+									<span>{this.state.uploadedData.toUpdate[i].barcode}</span>
 								</div>
 							</div>
 						);

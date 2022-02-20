@@ -54,7 +54,8 @@ class UploadXlsx extends Component{
 				name: jsonData[i]['상품명'],
 				purchase_cost: jsonData[i]['매입원가'],
 				registered_date: new Date(),
-				size: jsonData[i]['규격']
+				size: jsonData[i]['규격'],
+				barcode: jsonData[i]['바코드']
 			});
 		}
 		this.setState({
@@ -75,7 +76,8 @@ class UploadXlsx extends Component{
 		for(var i=0; i<this.state.newData.length; i++){		//필수 정보 누락 오류
 			if(this.state.newData[i].code === undefined ||
 				this.state.newData[i].name === undefined ||
-				this.state.newData[i].purchase_cost === undefined)
+				this.state.newData[i].purchase_cost === undefined ||
+				this.state.newData[i].barcode === undefined)
 				emptyError.push(this.state.newData[i]);
 		}
 		if(codeError.length > 0 || emptyError.length > 0){
@@ -101,7 +103,7 @@ class UploadXlsx extends Component{
 			for(var i=0; i<newData.length; i++){
 				for(var j=0; j<currentData.length; j++){
 					if(newData[i].code === currentData[j].code){
-						if(newData[i].name !== currentData[j].name || newData[i].purchase_cost !== currentData[j].purchase_cost || newData[i].size !== currentData[j].size){
+						if(newData[i].name !== currentData[j].name || newData[i].purchase_cost !== currentData[j].purchase_cost || newData[i].size !== currentData[j].size || newData[i].barcode !== currentData[j].barcode){
 							tempUpdate.push(newData[i]);
 							tempCurrent.push(currentData[j]);
 						}
