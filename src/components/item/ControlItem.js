@@ -49,15 +49,15 @@ class ControlItem extends Component{
 			)
 			for(var i=0; i<currentData.length; i++){
 				const size = [300, 300];
-				const root_url = `https://chart.googleapis.com/chart?cht=qr&chs=${size[0]}x${size[1]}&chl=http://localhost:5000/customer/readItem/${this.state.target}/${currentData[i].code}`;
+				const root_url = `https://chart.googleapis.com/chart?cht=qr&chs=${size[0]}x${size[1]}&chl=http://localhost:5000/customer/readItem/${this.state.target}/${currentData[i].item_code}`;
 				current_list.push(
-					<div key={'current' + currentData[i].code}>
+					<div key={'current' + currentData[i].item_code}>
 						<span>{currentData[i].code}</span>
 						<span>{currentData[i].name}</span>
 						<span>{currentData[i].purchase_cost}</span>
 						<span>{currentData[i].size}</span>
 						<span>{currentData[i].barcode}</span>
-						<a href={`http://localhost:5000/customer/readItem/${this.state.target}/${currentData[i].code}`} target="_blank">customerPage</a>
+						<a href={`http://localhost:5000/customer/readItem/${this.state.target}/${currentData[i].item_code}`} target="_blank">customerPage</a>
 						<a href={root_url} target="_blank">QRcode</a>
 					</div>
 				);
@@ -67,8 +67,8 @@ class ControlItem extends Component{
 			update_list.push(<p key={'update_line'}>________ UPDATE ________</p>);
 			for(var i=0; i<this.state.uploadedData.toCreate.length; i++){
 				create_list.push(
-					<div key={'create' + this.state.uploadedData.toCreate[i].code}>
-						<span>{this.state.uploadedData.toCreate[i].code}</span>
+					<div key={'create' + this.state.uploadedData.toCreate[i].item_code}>
+						<span>{this.state.uploadedData.toCreate[i].item_code}</span>
 						<span>{this.state.uploadedData.toCreate[i].name}</span>
 						<span>{this.state.uploadedData.toCreate[i].purchase_cost}</span>
 						<span>{this.state.uploadedData.toCreate[i].size}</span>
@@ -78,18 +78,18 @@ class ControlItem extends Component{
 			}
 			for(var i=0; i<this.state.uploadedData.toUpdate.length; i++){
 				for(var j=0; j<this.state.currentData.length; j++){
-					if(this.state.uploadedData.toUpdate[i].code === this.state.currentData[j].code){
+					if(this.state.uploadedData.toUpdate[i].item_code === this.state.currentData[j].item_code){
 						update_list.push(
-							<div key={'update' + this.state.uploadedData.toUpdate[i].code}>
+							<div key={'update' + this.state.uploadedData.toUpdate[i].item_code}>
 								<div className="currentDataComparing">
-									<span>{this.state.uploadedData.toCurrent[i].code}</span>
+									<span>{this.state.uploadedData.toCurrent[i].item_code}</span>
 									<span>{this.state.uploadedData.toCurrent[i].name}</span>
 									<span>{this.state.uploadedData.toCurrent[i].purchase_cost}</span>
 									<span>{this.state.uploadedData.toCurrent[i].size}</span>
 									<span>{this.state.uploadedData.toCurrent[i].barcode}</span>
 								</div>
 								<div>
-									<span>{this.state.uploadedData.toUpdate[i].code}</span>
+									<span>{this.state.uploadedData.toUpdate[i].item_code}</span>
 									<span>{this.state.uploadedData.toUpdate[i].name}</span>
 									<span>{this.state.uploadedData.toUpdate[i].purchase_cost}</span>
 									<span>{this.state.uploadedData.toUpdate[i].size}</span>
@@ -104,16 +104,16 @@ class ControlItem extends Component{
 			file_error_list.push(<p key={'code_error_line'}>________ CODE ERROR ________</p>);
 			for(var i=0; i<this.state.uploadedData.codeError.length; i++){
 				file_error_list.push(
-					<div key={'codeError' + this.state.uploadedData.codeError[i].code}>
-						<span>{this.state.uploadedData.codeError[i].code}</span>
+					<div key={'codeError' + this.state.uploadedData.codeError[i].item_code}>
+						<span>{this.state.uploadedData.codeError[i].item_code}</span>
 					</div>
 				);
 			}
 			file_error_list.push(<p key={'empty_error_line'}>________ EMPTY ERROR ________</p>);
 			for(var i=0; i<this.state.uploadedData.emptyError.length; i++){
 				file_error_list.push(
-					<div key={'emptyError' + this.state.uploadedData.emptyError[i].code}>
-						<span>{this.state.uploadedData.emptyError[i].code}</span>
+					<div key={'emptyError' + this.state.uploadedData.emptyError[i].item_code}>
+						<span>{this.state.uploadedData.emptyError[i].item_code}</span>
 					</div>
 				);
 			}

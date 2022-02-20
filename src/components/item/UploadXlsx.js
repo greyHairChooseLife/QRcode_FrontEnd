@@ -50,12 +50,12 @@ class UploadXlsx extends Component{
 		let Obj = [];
 		for(var i=0; i<jsonData.length; i++){
 			Obj.push({
-				code: String(jsonData[i]['상품코드']),
-				name: jsonData[i]['상품명'],
+				item_code: String(jsonData[i]['상품코드']),			//String으로 바꿔주는 이유는 db에서 꺼내온 current data와 비교할 때 타입을 맞춰주기 위해서이다.
+				name: String(jsonData[i]['상품명']),
 				purchase_cost: jsonData[i]['매입원가'],
-				registered_date: new Date(),
-				size: jsonData[i]['규격'],
-				barcode: jsonData[i]['바코드']
+				registered_date: String(new Date()),
+				size: String(jsonData[i]['규격']),
+				barcode: String(jsonData[i]['바코드'])
 			});
 		}
 		this.setState({
@@ -68,13 +68,13 @@ class UploadXlsx extends Component{
 		let emptyError =[];
 		for(var i=0; i<this.state.newData.length; i++){		//코드 중복 오류
 			for(var j=i+1; j<this.state.newData.length; j++){
-				if(this.state.newData[i].code === this.state.newData[j].code){
+				if(this.state.newData[i].item_code === this.state.newData[j].item_code){
 					codeError.push(this.state.newData[i]);
 				}
 			}
 		}
 		for(var i=0; i<this.state.newData.length; i++){		//필수 정보 누락 오류
-			if(this.state.newData[i].code === undefined ||
+			if(this.state.newData[i].item_code === undefined ||
 				this.state.newData[i].name === undefined ||
 				this.state.newData[i].purchase_cost === undefined ||
 				this.state.newData[i].barcode === undefined)
@@ -102,13 +102,13 @@ class UploadXlsx extends Component{
 		if(currentData.length > 0){
 			for(var i=0; i<newData.length; i++){
 				for(var j=0; j<currentData.length; j++){
-					if(newData[i].code === currentData[j].code){
+					if(newData[i].item_code === currentData[j].item_code){
 						if(newData[i].name !== currentData[j].name || newData[i].purchase_cost !== currentData[j].purchase_cost || newData[i].size !== currentData[j].size || newData[i].barcode !== currentData[j].barcode){
 							tempUpdate.push(newData[i]);
 							tempCurrent.push(currentData[j]);
 						}
 						break;
-					}else if(j === currentData.length-1 && newData[i].code !== currentData[j].code){
+					}else if(j === currentData.length-1 && newData[i].item_code !== currentData[j].item_code){
 						tempCreate.push(newData[i]);
 					}
 				}
