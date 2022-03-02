@@ -1,0 +1,119 @@
+/* Header.js
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.tag {
+	position: absolute;
+	left: 80vw;
+	font-size: 2.5rem;
+	text-align: center;
+	padding: 0.5vw;
+	width: 15vw;
+	height: 3.5rem;
+	color: lemonchiffon;
+	background-color: lightseagreen;
+	border-bottom-left-radius: 2rem;
+	border-top-right-radius: 2rem;
+}
+
+/* Navigation.js
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.act_color:active {
+	background-color: lightseagreen;
+	color: white;
+}
+
+.nav_btn1 {
+	position: absolute;
+	top: 3vh;
+	margin: 1vw;
+	width: 15vw;
+	height: 6vh;
+	font-size: 1.7rem;
+	left: 34.5vw;
+}
+.nav_btn2 {
+	position: absolute;
+	top: 3vh;
+	margin: 1vw;
+	width: 15vw;
+	height: 6vh;
+	font-size: 1.7rem;
+	left: 50vw;
+}
+
+/* CreateAccount.js
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.powerBtn {
+	position: absolute;
+	top: 15vh;
+	left: 10vw;
+	font-size: 1.8rem;
+}
+
+.createAccForm {
+	position: absolute;
+	top: 20vh;
+	left: 10vw;
+	font-size: 1.5rem;
+}
+.createAccForm>input {
+	margin-right: 1vw;
+}
+.createAccForm>input:nth-child(1) {
+	width: 13vw;
+}
+.createAccForm>input:nth-child(2) {
+	width: 10vw;
+}
+.createAccForm>input:nth-child(3) {
+	width: 20vw;
+}
+.createAccForm>input:nth-child(4) {
+	width: 30vw;
+}
+.createAccForm>input:nth-child(5) {
+	font-size: 1.8rem;
+}
+.createAccForm>input:active {
+	background-color: lightseagreen;
+}
+
+/* ReadAccount.js
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.ReadAccount {
+	position: absolute;
+	top: 30vh;
+	left: 10vw;
+}
+
+.updateBtn {
+	font-size: 1.5rem;
+}
+.deleteBtn {
+	font-size: 1.5rem;
+}
+.updateBtn:hover {
+	border-color: blue;
+	color: blue;
+}
+.deleteBtn:hover {
+	border-color: red;
+	color: red;
+}
+
+thead {
+	font-size: 2.5rem;
+	color: grey;
+}
+tbody {
+	font-size: 2rem;
+}
+.ctrItmBtn {
+	margin-top: 1rem;
+	font-size: 1.7rem;
+	height: 4rem;
+}
+.ctrItmBtn:hover {
+	background-color: lightseagreen;
+	color: white;
+	border-color: white;
+}
