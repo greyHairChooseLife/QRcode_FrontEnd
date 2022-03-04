@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import UploadXlsx from './UploadXlsx';
+//import './ControlItem_plus';
+import QRCode from 'qrcode.react';
 
 const api = axios.create({
 	baseURL: 'http://localhost:5000',
@@ -45,6 +47,7 @@ class ControlItem extends Component{
 		let create_list = [];
 		let update_list = [];
 		let current_list = [];
+		const qrcodeSrc = [];
 		if(this.state.mode === 'read_current'){
 			const { currentData } = this.state;
 			current = 
@@ -61,6 +64,17 @@ class ControlItem extends Component{
 								<th>판매가</th>
 								<th>상품코드</th>
 								<th>바코드</th>
+								<th><button onClick={function(e){
+									const group = e.target.parentElement.parentElement.parentElement.parentElement.querySelectorAll('input[name="chBox"]');
+									for(var i=0; i<group.length; i++){
+										group[i].checked = true;
+										qrcodeSrc.push({
+											target: this.state.target,
+											item_code: currentData[i].item_code,
+											barcode: currentData[i].barcode,
+										})
+									}
+								}.bind(this)}>모두 선택</button></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -86,7 +100,22 @@ class ControlItem extends Component{
 						<td>{currentData[i].item_code}</td>
 						<td>{currentData[i].barcode}</td>
 						<td><a href={`http://localhost:5000/customer/readItem/${this.state.target}/${currentData[i].item_code}`} target="_blank">customerPage</a></td>
+						<td><input name='chBox' type="checkbox" onChange={function(e){
+							const idx = e.target.parentElement.parentElement.querySelector('td').innerText - 1;
+							if(e.target.checked === true){
+								qrcodeSrc.push({
+									target: this.state.target,
+									item_code: currentData[idx].item_code,
+									barcode: currentData[idx].barcode,
+								})
+							}else{
+								qrcodeSrc.splice(idx, 1);
+							}
+							console.log(qrcodeSrc);
+						}.bind(this)}/></td>
+						<td><QRCode value="https://google.com" /></td>
 						<td><a href={root_url} target="_blank">QRcode</a></td>
+						<td><canvas id="qrcode"></canvas></td>
 					</tr>
 				);
 			}
@@ -232,6 +261,7 @@ class ControlItem extends Component{
 				{create}
 				{current}
 			</div>
+
 		);
 	}
 }
