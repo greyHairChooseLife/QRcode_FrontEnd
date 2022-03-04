@@ -38,82 +38,186 @@ class ControlItem extends Component{
 	}
 
 	render(){
-		let file_error_list = [];
+		let codeError, emptyError = null;
+		let codeErrList = [];
+		let emptyErrList = [];
+		let current, update, create = null;
 		let create_list = [];
 		let update_list = [];
 		let current_list = [];
 		if(this.state.mode === 'read_current'){
 			const { currentData } = this.state;
-			current_list.push(
-				<p key={'current_line'}>________ LEGACY ________</p>
-			)
+			current = 
+				<div key={'current_line'}>
+					<span>현재 상품</span>
+					<table className="u-full-width">
+						<thead>
+							<tr>
+								<th>번호</th>
+								<th>등록</th>
+								<th>상품명</th>
+								<th>사이즈</th>
+								<th>매입원가</th>
+								<th>판매가</th>
+								<th>상품코드</th>
+								<th>바코드</th>
+							</tr>
+						</thead>
+						<tbody>
+							{current_list}
+						</tbody>
+					</table>
+				</div>
 			for(var i=0; i<currentData.length; i++){
-				const size = [300, 300];
-				const root_url = `https://chart.googleapis.com/chart?cht=qr&chs=${size[0]}x${size[1]}&chl=http://localhost:5000/customer/readItem/${this.state.target}/${currentData[i].item_code}`;
+				const QRsize = [300, 300];
+				const root_url = `https://chart.googleapis.com/chart?cht=qr&chs=${QRsize[0]}x${QRsize[1]}&chl=http://localhost:5000/customer/readItem/${this.state.target}/${currentData[i].item_code}`;
+				const registered_date = currentData[i].registered_date.split('T')[0];
+				if(currentData[i].size === 'undefined') 
+					currentData[i].size = '';
+				const margin_ratio = '';
 				current_list.push(
-					<div key={'current' + currentData[i].item_code}>
-						<span>{currentData[i].code}</span>
-						<span>{currentData[i].name}</span>
-						<span>{currentData[i].purchase_cost}</span>
-						<span>{currentData[i].size}</span>
-						<span>{currentData[i].barcode}</span>
-						<a href={`http://localhost:5000/customer/readItem/${this.state.target}/${currentData[i].item_code}`} target="_blank">customerPage</a>
-						<a href={root_url} target="_blank">QRcode</a>
-					</div>
+					<tr key={'current' + currentData[i].item_code}>
+						<td>{i+1}</td>
+						<td>{registered_date}</td>
+						<td>{currentData[i].name}</td>
+						<td>{currentData[i].size}</td>
+						<td>{currentData[i].purchase_cost}</td>
+						<td>{margin_ratio}</td>
+						<td>{currentData[i].item_code}</td>
+						<td>{currentData[i].barcode}</td>
+						<td><a href={`http://localhost:5000/customer/readItem/${this.state.target}/${currentData[i].item_code}`} target="_blank">customerPage</a></td>
+						<td><a href={root_url} target="_blank">QRcode</a></td>
+					</tr>
 				);
 			}
 		}else if(this.state.mode === 'read_uploaded'){
-			create_list.push(<p key={'create_line'}>________ NEW ________</p>);
-			update_list.push(<p key={'update_line'}>________ UPDATE ________</p>);
+			create = 
+				<div key={'create_line'}>
+					<span>추가되는 상품</span>
+						<table className="u-full-width">
+							<thead>
+								<tr>
+									<th>번호</th>
+									<th>등록</th>
+									<th>상품명</th>
+									<th>사이즈</th>
+									<th>매입원가</th>
+									<th>판매가</th>
+									<th>상품코드</th>
+									<th>바코드</th>
+								</tr>
+							</thead>
+							<tbody>
+								{create_list}
+							</tbody>
+						</table>
+				</div>
+			update = 
+				<div key={'update_line'}>
+					<span>바뀌는 상품</span>
+						<table className="u-full-width">
+							<thead>
+								<tr>
+									<th>번호</th>
+									<th>등록</th>
+									<th>상품명</th>
+									<th>사이즈</th>
+									<th>매입원가</th>
+									<th>판매가</th>
+									<th>상품코드</th>
+									<th>바코드</th>
+								</tr>
+							</thead>
+							<tbody>
+								{update_list}
+							</tbody>
+						</table>
+				</div>
 			for(var i=0; i<this.state.uploadedData.toCreate.length; i++){
+				const item = this.state.uploadedData.toCreate[i];
+				const registered_date = item.registered_date.split('T')[0];
+				if(item.size === 'undefined') 
+					item.size = '';
+				const margin_ratio = '';
 				create_list.push(
-					<div key={'create' + this.state.uploadedData.toCreate[i].item_code}>
-						<span>{this.state.uploadedData.toCreate[i].item_code}</span>
-						<span>{this.state.uploadedData.toCreate[i].name}</span>
-						<span>{this.state.uploadedData.toCreate[i].purchase_cost}</span>
-						<span>{this.state.uploadedData.toCreate[i].size}</span>
-						<span>{this.state.uploadedData.toCreate[i].barcode}</span>
-					</div>
+					<tr key={'create' + this.state.uploadedData.toCreate[i].item_code}>
+						<td>{i+1}</td>
+						<td>{registered_date}</td>
+						<td>{item.name}</td>
+						<td>{item.size}</td>
+						<td>{item.purchase_cost}</td>
+						<td>{margin_ratio}</td>
+						<td>{item.item_code}</td>
+						<td>{item.barcode}</td>
+					</tr>
 				);
 			}
 			for(var i=0; i<this.state.uploadedData.toUpdate.length; i++){
 				for(var j=0; j<this.state.currentData.length; j++){
+					const curItem = this.state.uploadedData.toCurrent[i];
+					const updItem = this.state.uploadedData.toUpdate[i];
+					const cur_registered_date = curItem.registered_date.split('T')[0];
+					if(curItem.size === 'undefined') 
+						curItem.size = '';
+					const cur_margin_ratio = '';
+					const upd_registered_date = updItem.registered_date.split('T')[0];
+					if(updItem.size === 'undefined') 
+						updItem.size = '';
+					const upd_margin_ratio = '';
+
 					if(this.state.uploadedData.toUpdate[i].item_code === this.state.currentData[j].item_code){
 						update_list.push(
-							<div key={'update' + this.state.uploadedData.toUpdate[i].item_code}>
-								<div className="currentDataComparing">
-									<span>{this.state.uploadedData.toCurrent[i].item_code}</span>
-									<span>{this.state.uploadedData.toCurrent[i].name}</span>
-									<span>{this.state.uploadedData.toCurrent[i].purchase_cost}</span>
-									<span>{this.state.uploadedData.toCurrent[i].size}</span>
-									<span>{this.state.uploadedData.toCurrent[i].barcode}</span>
-								</div>
-								<div>
-									<span>{this.state.uploadedData.toUpdate[i].item_code}</span>
-									<span>{this.state.uploadedData.toUpdate[i].name}</span>
-									<span>{this.state.uploadedData.toUpdate[i].purchase_cost}</span>
-									<span>{this.state.uploadedData.toUpdate[i].size}</span>
-									<span>{this.state.uploadedData.toUpdate[i].barcode}</span>
-								</div>
-							</div>
+								<tr key={'update' + updItem.item_code}>
+									<td>{j+1}</td>
+									<td>{cur_registered_date}</td>
+									<td>{curItem.name}</td>
+									<td>{curItem.size}</td>
+									<td>{curItem.purchase_cost}</td>
+									<td>{cur_margin_ratio}</td>
+									<td>{curItem.item_code}</td>
+									<td>{curItem.barcode}</td>
+								</tr>
+						);
+						update_list.push(
+								<tr key={'update_upd' + updItem.item_code}>
+									<td>{j+1}</td>
+									<td>{upd_registered_date}</td>
+									<td>{updItem.name}</td>
+									<td>{updItem.size}</td>
+									<td>{updItem.purchase_cost}</td>
+									<td>{upd_margin_ratio}</td>
+									<td>{updItem.item_code}</td>
+									<td>{updItem.barcode}</td>
+								</tr>
 						);
 					}
 				}
 			}
 		}else if(this.state.mode === 'read_file_error'){
-			file_error_list.push(<p key={'code_error_line'}>________ CODE ERROR ________</p>);
+			codeError = 
+				<div key={'code_error_line'}>
+					<span>중복된 코드가 있습니다.</span>
+					{codeErrList}
+			<br />
+			<br />
+			<br />
+				</div>
 			for(var i=0; i<this.state.uploadedData.codeError.length; i++){
-				file_error_list.push(
+				codeErrList.push(
 					<div key={'codeError' + this.state.uploadedData.codeError[i].item_code}>
-						<span>{this.state.uploadedData.codeError[i].item_code}</span>
+						<span>{this.state.uploadedData.codeError[i].barcode}</span>
 					</div>
 				);
 			}
-			file_error_list.push(<p key={'empty_error_line'}>________ EMPTY ERROR ________</p>);
+			emptyError = 
+				<div key={'empty_error_line'}>
+					<span>필수 정보가 빠졌습니다.</span>
+					{emptyErrList}
+				</div>
 			for(var i=0; i<this.state.uploadedData.emptyError.length; i++){
-				file_error_list.push(
+				emptyErrList.push(
 					<div key={'emptyError' + this.state.uploadedData.emptyError[i].item_code}>
-						<span>{this.state.uploadedData.emptyError[i].item_code}</span>
+						<span>{this.state.uploadedData.emptyError[i].barcode}</span>
 					</div>
 				);
 			}
@@ -122,10 +226,11 @@ class ControlItem extends Component{
 		return (
 			<div className="ControlItem">
 				<UploadXlsx target={this.state.target} currentData={this.state.currentData} changeRootMode={this.props.changeMode} changeMode={this.changeMode} setUploadedData={this.setUploadedData} resetItem={this.props.resetItem} />
-				{file_error_list}
-				{create_list}
-				{update_list}
-				{current_list}
+				{codeError}
+				{emptyError}
+				{update}
+				{create}
+				{current}
 			</div>
 		);
 	}

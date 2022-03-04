@@ -8,7 +8,6 @@
 	padding: 0.5vw;
 	width: 15vw;
 	height: 3.5rem;
-	color: lemonchiffon;
 	background-color: lightseagreen;
 	border-bottom-left-radius: 2rem;
 	border-top-right-radius: 2rem;
@@ -117,3 +116,76 @@ tbody {
 	color: white;
 	border-color: white;
 }
+
+/* ControlItem.js
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.ControlItem {
+	position: absolute;
+	top: 20vh;
+	left: 10vw;
+	font-size: 1.5rem;
+}
+
+.ControlItem>div>table {
+	margin-top: 10vh;
+}
+.ControlItem>div>table>tbody>tr>td {
+	text-align: center;
+}
+.ControlItem>div>span {
+	position: relative;
+	top: 10vh;
+	font-size: 2.5rem;
+	background-color: black;
+	color: white;
+	padding: 1rem;
+}
+.ControlItem>div>table>tbody>tr:nth-child(even) {
+	background-color: lightseagreen;
+}
+.ControlItem>div>table>tbody>tr:nth-child(odd) {
+	color: grey;
+}
+
+.ControlItem>div>div>span {
+	position: relative;
+	top: 12vh;
+	font-size: 2.5rem;
+	padding: 1rem;
+}
+
+
+/* UploadXlsx.js
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.uploadXlsx>form>input[type="file"] {
+	display: none;
+}
+.uploadXlsx>form>label {
+	display: inline-block;
+	border: solid 2px grey;
+	width: 6vw;
+	height: 4vh;
+	padding-top: 1vh;
+	font-size: 1vw;
+	border-radius: 1rem;
+	text-align: center;
+	color: #454545;
+	cursor: pointer;
+}
+.uploadXlsx>form>label:hover {
+	background-color: lightseagreen;
+	color: white;
+}
+.uploadXlsx>form>div {
+	display: inline-block;
+	font-size: 2rem;
+	margin: 2vh;
+}
+.uploadXlsx>form>div>span {
+	color: red;
+}
+.uploadXlsx>form>input[type="submit"] {
+	position: absolute;
+	top: 10vh;
+}
+

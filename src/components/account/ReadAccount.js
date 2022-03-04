@@ -68,6 +68,7 @@ class ReadAccount extends Component{
 							}.bind(this)}>수정</button>
 							<th></th>
 							<button className="deleteBtn" onClick={function(){
+								console.log('btn: ', data[m].id, m);
 								this.props.changeMode('delete_account', data[m].id, m);
 							}.bind(this)}>삭제</button>
 						</tr>

@@ -48,13 +48,18 @@ class UploadXlsx extends Component{
 		const first_sheet_name = workbook.SheetNames[0];
 		const jsonData = xlsx.utils.sheet_to_json(workbook.Sheets[first_sheet_name]);
 		let Obj = [];
+		const date = new Date();
+		date.setDate(date.getDate() - 1);
 		for(var i=0; i<jsonData.length; i++){
+			let size = String(jsonData[i]['규격']);
+			if(jsonData[i]['규격'] === undefined)
+				size = '';
 			Obj.push({
 				item_code: String(jsonData[i]['상품코드']),			//String으로 바꿔주는 이유는 db에서 꺼내온 current data와 비교할 때 타입을 맞춰주기 위해서이다.
 				name: String(jsonData[i]['상품명']),
 				purchase_cost: jsonData[i]['매입원가'],
-				registered_date: String(new Date()),
-				size: String(jsonData[i]['규격']),
+				registered_date: date.toISOString(),
+				size: size,
 				barcode: String(jsonData[i]['바코드'])
 			});
 		}
@@ -145,8 +150,12 @@ class UploadXlsx extends Component{
 				this.createItem(this.state.target);
 				this.updateItem(this.state.target);
 			}.bind(this)}>
-				<input type="file" accept=".xlsx" name="uploaded" onChange={async function(e){
+				<label for="fileBox">파일 선택</label>
+				<div>선택 된 파일 : <span></span></div>
+				<input type="file" id="fileBox" accept=".xlsx" name="uploaded" onChange={async function(e){
 				e.preventDefault();
+				const fileName = e.target.value.split("\\");
+				e.currentTarget.parentElement.querySelector('span').innerText = fileName.pop();
 				await this.readFile(e);
 				if(this.checkValidity()){
 					this.props.setUploadedData(await this.compareCurrentAndNew());
