@@ -79,10 +79,10 @@ class UploadXlsx extends Component{
 			}
 		}
 		for(var i=0; i<this.state.newData.length; i++){		//필수 정보 누락 오류
-			if(this.state.newData[i].item_code === undefined ||
-				this.state.newData[i].name === undefined ||
-				this.state.newData[i].purchase_cost === undefined ||
-				this.state.newData[i].barcode === undefined)
+			if(this.state.newData[i].item_code === "undefined" ||
+				this.state.newData[i].name === "undefined" ||
+				this.state.newData[i].purchase_cost === "undefined" ||
+				this.state.newData[i].barcode === "undefined")
 				emptyError.push(this.state.newData[i]);
 		}
 		if(codeError.length > 0 || emptyError.length > 0){
@@ -149,6 +149,7 @@ class UploadXlsx extends Component{
 				e.preventDefault();
 				this.createItem(this.state.target);
 				this.updateItem(this.state.target);
+				alert('새로고침하세요.');
 			}.bind(this)}>
 				<label for="fileBox">파일 선택</label>
 				<div>선택 된 파일 : <span></span></div>

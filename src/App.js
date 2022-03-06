@@ -12,6 +12,12 @@ import '../node_modules/font-awesome/css/font-awesome.min.css';
 import './css/normalize.css';
 import './css/skeleton.css';
 import './css/my.css';
+//modules
+import axios from 'axios';
+
+const api = axios.create({
+	baseURL: 'http://localhost:5000',
+})
 
 class App extends Component{
 	constructor() {
@@ -23,8 +29,27 @@ class App extends Component{
 			items: [],
 			updateTarget: null,
 			targetOfList: null,
+			marginRatio: null,
 		}
 	}
+	loadMarginRatio = async (target) => {
+		const result = await api.post('/accounts/loadMarginRatio', {
+			target: target,
+		});
+		this.setState({
+			marginRatio: result.data[0].margin_ratio,
+		})
+	}
+	saveMarginRatio = async (target, value) => {
+		const result = await api.post('/accounts/saveMarginRatio', {
+			target: target,
+			value: value,
+		});
+		this.setState({
+			marginRatio: value,
+		})
+	}
+
 	changeMode = (mode, target, i) => {
 		this.setState({
 			mode: mode,
@@ -74,12 +99,12 @@ class App extends Component{
 		else if(this.state.mode === 'read_item'){
 			header = <Header mode={this.state.mode} changeMode={this.changeMode} />;
 			nav = <Navigation changeMode={this.changeMode} />
-			article = <ReadItem resetItem={this.resetItem} data={this.state.items} />;
+			article = <ReadItem resetItem={this.resetItem} data={this.state.items} savedMarginRatio={this.state.savedMarginRatio}/>;
 		}
 		else if(this.state.mode === 'control_item'){
 			header = <Header mode={this.state.mode} changeMode={this.changeMode} />;
 			nav = <Navigation changeMode={this.changeMode} />
-			article = <ControlItem target={this.state.updateTarget} resetItem={this.resetItem} data={this.state.items} changeMode={this.changeMode} />
+			article = <ControlItem target={this.state.updateTarget} resetItem={this.resetItem} data={this.state.items} changeMode={this.changeMode} savedMarginRatio={this.state.marginRatio} loadMarginRatio={this.loadMarginRatio} saveMarginRatio={this.saveMarginRatio} />
 		}
 
 		return (

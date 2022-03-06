@@ -154,6 +154,48 @@ tbody {
 	padding: 1rem;
 }
 
+input[type="checkbox"] {
+	zoom: 2.5;
+}
+
+#selectAll {
+	border-radius: 0.5rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+
+#printQRcodeBtn {
+	position: relative;
+	top: 10vh;
+	left: 70vw;
+	font-size: 2rem;
+	border-radius: 0.5rem;
+	background-color: yellow;
+}
+#printQRcodeBtn:active {
+	background-color: white;
+}
+
+#loadAndSaveMarginRatio {
+	position: absolute;
+	top: 2vh;
+	left: 70vw;
+	width: 15vw;
+	font-size: 2rem;
+}
+#loadAndSaveMarginRatio>input {
+	width: 5vw;
+	display: block;
+}
+#loadAndSaveMarginRatio>button {
+	font-size: 2rem;
+	border-radius: 0.5rem;
+	background-color: yellow;
+
+}
+a {
+	color: black;
+}
 
 /* UploadXlsx.js
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -189,3 +231,10 @@ tbody {
 	top: 10vh;
 }
 
+/* ReadItem.js
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.ReadItem {
+	position: absolute;
+	top: 30vh;
+	left: 10vw;
+}
