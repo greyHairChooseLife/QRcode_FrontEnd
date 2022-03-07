@@ -1,0 +1,10 @@
+FROM node:current-slim
+
+WORKDIR /app
+
+COPY . .
+
+EXPOSE 9999
+
+CMD [ "npm", "start" ]
+
