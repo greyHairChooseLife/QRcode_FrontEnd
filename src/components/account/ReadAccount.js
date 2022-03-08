@@ -3,7 +3,7 @@ import axios from 'axios';
 import CreateAccount from './CreateAccount';
 
 const api = axios.create({
-	baseURL: 'http://localhost:5000',
+	baseURL: 'http://54.180.86.49:5000',
 })
 
 class ReadAccount extends Component{

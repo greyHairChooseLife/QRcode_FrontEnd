@@ -5,7 +5,7 @@ import UploadXlsx from './UploadXlsx';
 import QRCode from 'qrcode.react';
 
 const api = axios.create({
-	baseURL: 'http://localhost:5000',
+	baseURL: 'http://54.180.86.49:5000',
 })
 
 class ControlItem extends Component{
@@ -169,7 +169,7 @@ class ControlItem extends Component{
 						<td>{currentData[i].price}</td>
 						<td>{currentData[i].item_code}</td>
 						<td>{currentData[i].barcode}</td>
-						<td><a href={`http://localhost:5000/customer/readItem/${this.state.target}/${currentData[i].item_code}`} target="_blank">보기</a></td>
+						<td><a href={`http://54.180.86.49:5000/customer/readItem/${this.state.target}/${currentData[i].item_code}`} target="_blank">보기</a></td>
 						<td><input name='chBox' type="checkbox" onChange={function(e){
 							const idx = e.target.parentElement.parentElement.querySelector('td').innerText - 1;
 							if(e.target.checked === true){
@@ -319,7 +319,7 @@ class ControlItem extends Component{
 		}
 		const printQRcodeBtn =
 			<div>
-				<form id="printQRcodeForm" target="_blank" action="http://localhost:5000/accounts/printQRcode" method="post">
+				<form id="printQRcodeForm" target="_blank" action="http://54.180.86.49:5000/accounts/printQRcode" method="post">
 					<input id="src" type="hidden" name="src" value="" />
 				</form>
 				<button id="printQRcodeBtn" onClick={function(){
